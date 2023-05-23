@@ -1,0 +1,11 @@
+definir servicios
+.send(receptor, perform, contenido) //	[source A]
+Organización jerárquica como base (contract net), cuando jefe muere asignación con subasta, social choice (bait) ?
+
+Es necesario realizar trabajo en los siguientes aspectos:
+1.Coordinación vía paso de mensajes entre agentes del mismo equipo.
+2.Servicios nuevos: se debe incluir algún servicio nuevo por parte de un agente y el uso del mismo por parte de otros agentes.
+3.Comportamientos internos de los agentes: Se deben realizar mejoras de comportamientos existentes (por ej. tratar de evitar el fuego amigo).
+4.Acción Interna: se debe incluir al menos una nueva acción interna en Python.
+
+30 mayo
