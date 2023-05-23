@@ -21,14 +21,13 @@ threshold_ammo(20).
 
 +myBackups(B):check
   <-
-      .nth(0,B,D1);
-      .send(D1,tell,assignext);
-      .nth(1,B,D2);
+      //delete el jefe de la lista
+      //sacar externos
       .send(D2,tell,assignext);
-      .nth(2,B,D3);
-      .send(D3,tell,assignint);
-      .nth(3,B,D4);
+      //sacar interiores
       .send(D4,tell,assignint);
+      //sacar salientes
+      .send(S,tell,assignsal).
 
 +assignext()[source(A)]
   <-
@@ -56,7 +55,7 @@ threshold_ammo(20).
     +patroll_point(0);
     -toassign.
 
-+target_reached(T): patrolling & team(200)
++target_reached(T): patrolling 
   <-
   ?patroll_point(P);
   -+patroll_point(P+1);
