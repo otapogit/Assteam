@@ -6,39 +6,32 @@ class AssMedic(BDITroop):
         super().add_custom_actions(actions)
 
         @actions.add_function(".ptomedio",([int],))
-        def _ptomedio(pos1,pos2):
-            posx = pos1[0]/2+pos2[0]/2
-            posz = pos1[2]/2+pos2[2]/2
-            if map.can_walk(posx,posz):
-                return [posx,0,posz]
+        def _ptomedio(listpos):
+            if listpos.length % 2 = 0:
+                return listpos[(listpos.length/2) - 1]
             else:
-                posx2 = posx
-                posz2 = posz
-                
-                for acc in range (1,100):
-                    posx2 = posx + acc
-                    if map.can_walk(posx2, posz2):
-                        break
-                    posx2 = posx - acc
-                    if map.can_walk(posx2, posz2):
-                        break
-                    posx2 = posx
-                    posz2 = posz + acc
-                    if map.can_walk(posx2, posz2):
-                        break
-                    posz2 = posz - acc
-                    if map.can_walk(posx2, posz2):
-                        break
-                    posz2 = posz
-                return [posx2,0,posz2]
+                return listpos[(listpos.length - 1)/2]
 
         
         @actions.add_function(".canWalk",(int,))
         def _canWalk(x):
             if map.can_walk(x[0],x[2]):
-                return 1
-            else:
-                return 0
+                return x
+            i = 1
+            while(True)
+                if map.can_walk(x[0] + i,x[2]):
+                    x[0] = x[0] + i
+                    return x
+                if map.can_walk(x[0] - i,x[2]):
+                    x[0] = x[0] - i
+                    return x
+                if map.can_walk(x[0],x[2] + i):
+                    x[2] = x[2] + i
+                    return x
+                if map.can_walk(x[0],x[2] - i):
+                    x[2] = x[2] - i
+                    return x
+                i++
         
          @actions.add_function(".mascercano",(int,))
          def _mascercano(listpos, mypos):
