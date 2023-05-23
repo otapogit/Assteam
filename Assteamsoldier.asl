@@ -10,16 +10,51 @@ threshold_ammo(20).
   .length(A,L)
   if(L == 0){
     .register_service("jefe");
+    +check;
+    .wait(10);
+    .get_backups;
+  }else{
+    +toassign;
   }
-
-  .create_control_points(F,25,3,C);
-  +control_points(C);
-  .length(C,L);
-  +total_control_points(L);
-  +patrolling;
-  +patroll_point(0);
+ 
   .print("Got control points").
 
++myBackups(B):check
+  <-
+      .nth(0,B,D1);
+      .send(D1,tell,assignext);
+      .nth(1,B,D2);
+      .send(D2,tell,assignext);
+      .nth(2,B,D3);
+      .send(D3,tell,assignint);
+      .nth(3,B,D4);
+      .send(D4,tell,assignint);
+
++assignext()[source(A)]
+  <-
+    if(toassign){
+      .register_service("external");
+    }
+    .create_control_points(F,75,3,C);
+    +control_points(C);
+    .length(C,L);
+    +total_control_points(L);
+    +patrolling;
+    +patroll_point(0);
+    -toassign.
+
++assignint()[source(A)]
+  <-
+    if(toassign){
+      .register_service("internal");
+    }
+    .create_control_points(F,40,3,C);
+    +control_points(C);
+    .length(C,L);
+    +total_control_points(L);
+    +patrolling;
+    +patroll_point(0);
+    -toassign.
 
 +target_reached(T): patrolling & team(200)
   <-
@@ -39,35 +74,7 @@ threshold_ammo(20).
   +patroll_point(0).
 
 
-//TEAM_ALLIED
 
-+flag (F): team(100)
-  <-
-    
-  .goto(F).
-
-+flag_taken: team(100)
-  <-
-  .print("In ASL, TEAM_ALLIED flag_taken");
-  ?base(B);
-  +returning;
-  .goto(B);
-  -exploring.
-
-+heading(H): exploring
-  <-
-  .wait(2000);
-  .turn(0.375).
-
-//+heading(H): returning
-//  <-
-//  .print("returning").
-
-+target_reached(T): team(100)
-  <-
-  .print("target_reached");
-  +exploring;
-  .turn(0.375).
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
@@ -102,6 +109,8 @@ health(H):threshold_health(W) & H<W & not pedirvida
 +!elegirmedic:mbids(B) & mehdics(M)
     <-
         //aqui deberiamos hacer un py para elegir el mejor
+        .nth(index,M,A);
+        .delete(index,M,M1);
         .send(A,tell,acceptmedic);
         //borrar A de la lista
         .send(M1,tell,cancelmedic);
@@ -114,4 +123,5 @@ health(H):threshold_health(W) & H<W & not pedirvida
 
 +healIn(Pos)[source(A)]
     <-
+    +acurar;
     .goto(Pos).
