@@ -44,7 +44,7 @@ class AssMedic(BDITroop):
          def _mascercano(listpos, mypos):
             bestpos = listpos[0]
             index = 0
-            listpos.del(0)
+            del listpos[0]
             for i, pos in enummerate(listpos):
                 if((abs(mypos[0] - pos[0]) + abs(mypos[2] - pos[2])) < (abs(mypos[0] - bestpos[0]) + abs(mypos[2] - bestpos[2]))):
                     bestpos = pos
