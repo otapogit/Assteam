@@ -21,13 +21,23 @@ threshold_ammo(20).
 
 +myBackups(B):check
   <-
-      //delete el jefe de la lista
-      //sacar externos
-      .send(D2,tell,assignext);
-      //sacar interiores
-      .send(D4,tell,assignint);
-      //sacar salientes
-      .send(S,tell,assignsal).
+      //conseguir lista posiciones
+      .asignaroles(B, bids?, F, newB)
+      .nth(0,newB,jefe);
+      .send(jefe,tell,assignjefe);
+      .nth(1,newB,res1);
+      .send(res1,tell,assignres);
+      .nth(2,newB,res2);
+      .send(res2,tell,assignres);
+      .nth(3,newB,int1);
+      .send(int1,tell,assignint);
+      .nth(4,newB,int2);
+      .send(int2,tell,assignint);
+      .nth(5,newB,ext1);
+      .send(ext1,tell,assignext);
+      .nth(6,newB,ext2);
+      .send(ext2,tell,assignext);
+      
 
 +assignext()[source(A)]
   <-

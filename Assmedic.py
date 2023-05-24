@@ -43,7 +43,15 @@ class AssMedic(BDITroop):
                     bestpos = pos
                     index = i + 1
             return index 
-                
+         
+         @actions.add_function(".asignaroles",(?,))
+         def _asignaroles(listagentes, listpos, F):
+            // sort by de más cercano a la F a más lejano 
+            distance = []
+            for pos in listpos:
+                distance.append((abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
+            result = [x for _,x in sorted(zip(distance,listagentes))]
+            return result
 
 """
 Información disponible desde Python:
