@@ -7,8 +7,11 @@ threshold_ammo(20).
 
 +myBackups(B):check
   <-
+  .send(B,tell,informaposicion());
+  .wait(2000);
+  ?bids(bids)
   //conseguir lista posiciones
-  .asignaroles(B, bids?, F, newB)
+  .asignaroles(B, bids, F, newB)
   .nth(0,newB,jefe);
   .send(jefe,tell,assignjefe);
   .nth(1,newB,res1);
@@ -23,7 +26,19 @@ threshold_ammo(20).
   .send(ext1,tell,assignext);
   .nth(6,newB,ext2);
   .send(ext2,tell,assignext);
-      
+
++informaposicion()[source(A)]:
+    <-
+    ?position(Pos);
+    .send(A,tell,mybid(Pos));
+    -informaposicion().
+
++mybid(Pos)[source(A)]:
+    <-
+    ?bids(B)
+    .concat(B,[Pos],B1);
+    -+bids(B1);
+    -mybid(Pos).
 
 +assignext()[source(A)]
   <-
