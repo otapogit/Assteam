@@ -1,8 +1,7 @@
-definir servicios
-.send(receptor, perform, contenido) //	[source A]
 Organización jerárquica como base (contract net), cuando jefe muere asignación con subasta, social choice (bait) ?
 7 soldados,2 medicos,1 fieldops
 soldados: 1 jefe, 2 reservas, 2 internos, 2 externos 
+Defensa (axis)
 
 Es necesario realizar trabajo en los siguientes aspectos:
 1.Coordinación vía paso de mensajes entre agentes del mismo equipo.

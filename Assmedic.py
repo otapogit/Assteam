@@ -6,11 +6,12 @@ class AssMedic(BDITroop):
         super().add_custom_actions(actions)
 
         @actions.add_function(".ptomedio",([int],))
-        def _ptomedio(listpos):
-            if listpos.length % 2 = 0:
-                return listpos[(listpos.length/2) - 1]
-            else:
-                return listpos[(listpos.length - 1)/2]
+        def _ptomedio(pos1, pos2):
+            return [int((pos1[0]+pos2[0])/2), 0, int((pos1[2]+pos2[2])/2)]
+            # if listpos.length % 2 = 0:
+            #    return listpos[(listpos.length/2) - 1]
+            #else:
+            #    return listpos[(listpos.length - 1)/2]
 
         
         @actions.add_function(".canWalk",(int,))

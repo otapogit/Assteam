@@ -4,66 +4,46 @@ threshold_ammo(20).
 
 +flag (F): team(200)
   <-
-  //supuesto conseguir jefe
-  .get_service("jefe");
-  ?jefe(A);
-  .length(A,L)
-  if(L == 0){
-    .register_service("jefe");
-    +check;
-    .wait(10);
-    .get_backups;
-  }else{
-    +toassign;
-  }
- 
-  .print("Got control points").
 
 +myBackups(B):check
   <-
-      //conseguir lista posiciones
-      .asignaroles(B, bids?, F, newB)
-      .nth(0,newB,jefe);
-      .send(jefe,tell,assignjefe);
-      .nth(1,newB,res1);
-      .send(res1,tell,assignres);
-      .nth(2,newB,res2);
-      .send(res2,tell,assignres);
-      .nth(3,newB,int1);
-      .send(int1,tell,assignint);
-      .nth(4,newB,int2);
-      .send(int2,tell,assignint);
-      .nth(5,newB,ext1);
-      .send(ext1,tell,assignext);
-      .nth(6,newB,ext2);
-      .send(ext2,tell,assignext);
+  //conseguir lista posiciones
+  .asignaroles(B, bids?, F, newB)
+  .nth(0,newB,jefe);
+  .send(jefe,tell,assignjefe);
+  .nth(1,newB,res1);
+  .send(res1,tell,assignres);
+  .nth(2,newB,res2);
+  .send(res2,tell,assignres);
+  .nth(3,newB,int1);
+  .send(int1,tell,assignint);
+  .nth(4,newB,int2);
+  .send(int2,tell,assignint);
+  .nth(5,newB,ext1);
+  .send(ext1,tell,assignext);
+  .nth(6,newB,ext2);
+  .send(ext2,tell,assignext);
       
 
 +assignext()[source(A)]
   <-
-    if(toassign){
-      .register_service("external");
-    }
+    .register_service("external");
     .create_control_points(F,75,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
-    -toassign.
 
 +assignint()[source(A)]
   <-
-    if(toassign){
-      .register_service("internal");
-    }
+    .register_service("internal");
     .create_control_points(F,40,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
-    -toassign.
 
 +target_reached(T): patrolling 
   <-
