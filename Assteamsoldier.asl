@@ -8,33 +8,6 @@ threshold_ammo(20).
   .wait(50);
   +bids([]).
 
-/*
-+myBackups(B):check
-  <-
-  ?name(X);
-  if(name == "JEFE"){
-  +soyjefe;
-  .print("soy jefe");
-  .wait(50);
-  .nth(0,B,Jefe);
-  .send(Jefe,tell,assignjefe);
-  .nth(1,B,Res1);
-  .send(Res1,tell,assignres);
-  .nth(2,B,Res2);
-  .send(Res2,tell,assignres);
-  .nth(3,B,Int1);
-  .send(Int1,tell,assignint);
-  .nth(4,B,Int2);
-  .send(Int2,tell,assignint);
-  .nth(5,B,Ext1);
-  .send(Ext1,tell,assignext);
-  .nth(6,B,Ext2);
-  .send(Ext2,tell,assignext);
-  }
-  .print("mi rol asignado").
-  //conseguir lista posiciones
-  //.asignaroles(B, bids, F, newB);
-*/
 
 +informaposicion[source(A)]
     <-
@@ -77,7 +50,7 @@ threshold_ammo(20).
   <-
     ?flag(F);
     .register_service("reserva");
-    .create_control_points(F,75,3,C);
+    .create_control_points(F,10,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
@@ -127,17 +100,17 @@ threshold_ammo(20).
   .shoot(3,Position).
 
   //////////////////////////
-+health(H): threshold_health(W) & H<W & not pedirvida
++health(90): threshold_health(W) & H<W & not pedirvida
     <-
         +pedirvida;
         .get_medics.
 
 +myMedics(M):pedirvida
     <-
-        ?position(p);
+        ?position(P);
         +mbids([]);
         +mehdics([]);
-        .send(M,tell,pedirvida(pos));
+        .send(M,tell,pedirvida(P));
         .wait(500);
         !!elegirmedic;
         -myMedics(_).
@@ -155,8 +128,10 @@ threshold_ammo(20).
 +!elegirmedic:mbids(B) & mehdics(M)
     <-
         //aqui deberiamos hacer un py para elegir el mejor
-        .nth(index,M,A);
-        .delete(index,M,M1);
+        ?position(Mypos);
+        .selectbest(Mypos,M,Index);
+        .nth(Index,M,A);
+        .delete(Index,M,M1);
         .send(A,tell,acceptmedic);
         //borrar A de la lista
         .send(M1,tell,cancelmedic);

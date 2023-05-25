@@ -5,7 +5,7 @@ class AssMedic(BDIMedic):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".ptomedio",([int],))
+        @actions.add_function(".ptomedio",(list,list))
         def _ptomedio(pos1,pos2):
             posx = pos1[0]/2+pos2[0]/2
             posz = pos1[2]/2+pos2[2]/2
@@ -33,14 +33,14 @@ class AssMedic(BDIMedic):
                 return [posx2,0,posz2]
 
 
-        @actions.add_function(".canWalk",(int,))
+        @actions.add_function(".canWalk",(list,))
         def _canWalk(x):
             if map.can_walk(x[0],x[2]):
                 return 1
             else:
                 return 0
         
-        @actions.add_function(".mascercano",(int,))
+        @actions.add_function(".mascercano",(list,list))
         def _mascercano(listpos, mypos):
             bestpos = listpos[0]
             index = 0

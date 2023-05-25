@@ -68,16 +68,16 @@
   ///////////////
 +pedirvida(Pos)[source(A)]:not (curando(_,_))
     <-
-    ?position(miPos);
-    .send(A,tell,mybidm(miPos));
+    ?position(MiPos);
+    .send(A,tell,mybidm(MiPos));
     +curando(A,Pos);
     -pedirvida(_).
 
 +acceptmedic[source(A)]:curando(A,Pos)
     <-
         /////////
-        ?position(mypos);
-        .ptomedio(Pos,mypos,L);
+        ?position(Mypos);
+        .ptomedio(Pos,Mypos,L);
         .goto(L);
         .send(A,tell,healIn(L)).
 

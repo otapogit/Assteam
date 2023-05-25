@@ -6,13 +6,13 @@
     "service_password": "secret",
     "axis": [
 		{
-            "rank": "BDISoldier",
-            "name": "JEFE",
+            "rank": "Asssoldier.AssSoldier",
+            "name": "MOHAMED",
             "password": "secret",
             "asl": "Assteamsoldier.asl"
         },
         {
-            "rank": "BDISoldier",
+            "rank": "Asssoldier.AssSoldier",
             "name": "axis",
             "password": "secret",
             "amount": 6,
