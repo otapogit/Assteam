@@ -7,15 +7,22 @@
     "axis": [
 		{
             "rank": "BDISoldier",
+            "name": "JEFE",
+            "password": "secret",
+            "asl": "Assteamsoldier.asl"
+        },
+        {
+            "rank": "BDISoldier",
             "name": "axis",
             "password": "secret",
-            "amount": 8,
+            "amount": 6,
             "asl": "Assteamsoldier.asl"
         },
         {
             "rank": "Assmedic.AssMedic",
             "name": "medic_axis",
             "password": "secret",
+            "amount": 2,
             "asl": "Assteammedic.asl"
         },
          {

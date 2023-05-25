@@ -32,7 +32,7 @@ class AssMedic(BDIMedic):
                     posz2 = posz
                 return [posx2,0,posz2]
 
-        
+
         @actions.add_function(".canWalk",(int,))
         def _canWalk(x):
             if map.can_walk(x[0],x[2]):

@@ -4,29 +4,37 @@ threshold_ammo(20).
 
 +flag (F): team(200)
   <-
-  .print("cum").
+  +check;
+  .wait(50);
+  +bids([]).
 
-+myBackups(B): check
+/*
++myBackups(B):check
   <-
-  .send(B,tell,informaposicion);
-  .wait(2000);
-  ?bids(bids);
+  ?name(X);
+  if(name == "JEFE"){
+  +soyjefe;
+  .print("soy jefe");
+  .wait(50);
+  .nth(0,B,Jefe);
+  .send(Jefe,tell,assignjefe);
+  .nth(1,B,Res1);
+  .send(Res1,tell,assignres);
+  .nth(2,B,Res2);
+  .send(Res2,tell,assignres);
+  .nth(3,B,Int1);
+  .send(Int1,tell,assignint);
+  .nth(4,B,Int2);
+  .send(Int2,tell,assignint);
+  .nth(5,B,Ext1);
+  .send(Ext1,tell,assignext);
+  .nth(6,B,Ext2);
+  .send(Ext2,tell,assignext);
+  }
+  .print("mi rol asignado").
   //conseguir lista posiciones
-  .asignaroles(B, bids, F, newB);
-  .nth(0,newB,jefe);
-  .send(jefe,tell,assignjefe);
-  .nth(1,newB,res1);
-  .send(res1,tell,assignres);
-  .nth(2,newB,res2);
-  .send(res2,tell,assignres);
-  .nth(3,newB,int1);
-  .send(int1,tell,assignint);
-  .nth(4,newB,int2);
-  .send(int2,tell,assignint);
-  .nth(5,newB,ext1);
-  .send(ext1,tell,assignext);
-  .nth(6,newB,ext2);
-  .send(ext2,tell,assignext). 
+  //.asignaroles(B, bids, F, newB);
+*/
 
 +informaposicion[source(A)]
     <-
@@ -43,23 +51,51 @@ threshold_ammo(20).
 
 +assignext[source(A)]
   <-
-    .register_service("external");
+  ?flag(F);
+    .register_service("externo");
     .create_control_points(F,75,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
-    +patroll_point(0).
+    +patroll_point(0);
+    .print("soy ext").
+
++assignjefe[source(A)]
+  <-
+    ?flag(F);
+    .register_service("jefe");
+    .create_control_points(F,75,3,C);
+    +control_points(C);
+    .length(C,L);
+    +total_control_points(L);
+    +patrolling;
+    +patroll_point(0);
+    .print("soy jefe").    
+
++assignres[source(A)]
+  <-
+    ?flag(F);
+    .register_service("reserva");
+    .create_control_points(F,75,3,C);
+    +control_points(C);
+    .length(C,L);
+    +total_control_points(L);
+    +patrolling;
+    +patroll_point(0);
+    .print("soy res").    
 
 +assignint[source(A)]
   <-
-    .register_service("internal");
+    ?flag(F);
+    .register_service("interno");
     .create_control_points(F,40,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
-    +patroll_point(0).
+    +patroll_point(0);
+    .print("soy int").
 
 +target_reached(T): patrolling 
   <-
@@ -78,7 +114,12 @@ threshold_ammo(20).
   -patroll_point(P);
   +patroll_point(0).
 
-
++asscheck[source(A)]
+  <-
+  if(not soyjefe){
+  +asscheck;
+  }
+  .print("asscheck").
 
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
