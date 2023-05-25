@@ -4,14 +4,15 @@ threshold_ammo(20).
 
 +flag (F): team(200)
   <-
+  .print("cum").
 
-+myBackups(B):check
++myBackups(B): check
   <-
-  .send(B,tell,informaposicion());
+  .send(B,tell,informaposicion);
   .wait(2000);
-  ?bids(bids)
+  ?bids(bids);
   //conseguir lista posiciones
-  .asignaroles(B, bids, F, newB)
+  .asignaroles(B, bids, F, newB);
   .nth(0,newB,jefe);
   .send(jefe,tell,assignjefe);
   .nth(1,newB,res1);
@@ -25,22 +26,22 @@ threshold_ammo(20).
   .nth(5,newB,ext1);
   .send(ext1,tell,assignext);
   .nth(6,newB,ext2);
-  .send(ext2,tell,assignext);
+  .send(ext2,tell,assignext). 
 
-+informaposicion()[source(A)]:
++informaposicion[source(A)]
     <-
     ?position(Pos);
     .send(A,tell,mybid(Pos));
-    -informaposicion().
+    -informaposicion.
 
-+mybid(Pos)[source(A)]:
++mybid(Pos)[source(A)]
     <-
-    ?bids(B)
+    ?bids(B);
     .concat(B,[Pos],B1);
     -+bids(B1);
     -mybid(Pos).
 
-+assignext()[source(A)]
++assignext[source(A)]
   <-
     .register_service("external");
     .create_control_points(F,75,3,C);
@@ -48,9 +49,9 @@ threshold_ammo(20).
     .length(C,L);
     +total_control_points(L);
     +patrolling;
-    +patroll_point(0);
+    +patroll_point(0).
 
-+assignint()[source(A)]
++assignint[source(A)]
   <-
     .register_service("internal");
     .create_control_points(F,40,3,C);
@@ -58,7 +59,7 @@ threshold_ammo(20).
     .length(C,L);
     +total_control_points(L);
     +patrolling;
-    +patroll_point(0);
+    +patroll_point(0).
 
 +target_reached(T): patrolling 
   <-
@@ -85,7 +86,7 @@ threshold_ammo(20).
   .shoot(3,Position).
 
   //////////////////////////
-health(H):threshold_health(W) & H<W & not pedirvida
++health(H): threshold_health(W) & H<W & not pedirvida
     <-
         +pedirvida;
         .get_medics.
@@ -102,7 +103,7 @@ health(H):threshold_health(W) & H<W & not pedirvida
 
 +mybidm(Pos)[source(A)]: pedirvida
     <-
-        ?mbids(B)
+        ?mbids(B);
         .concat(B,[Pos],B1);
         -+mbids(B1);
         ?mehdics(M);
