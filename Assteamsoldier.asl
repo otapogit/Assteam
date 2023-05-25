@@ -1,12 +1,12 @@
 //TEAM_AXIS
-threshold_health(40).
+threshold_health(100).
 threshold_ammo(20).
 
 +flag (F): team(200)
   <-
   +check;
   .wait(50);
-  +bids([]).
+  +mbids([]).
 
 
 +informaposicion[source(A)]
@@ -17,9 +17,9 @@ threshold_ammo(20).
 
 +mybid(Pos)[source(A)]
     <-
-    ?bids(B);
+    ?mbids(B);
     .concat(B,[Pos],B1);
-    -+bids(B1);
+    -+mbids(B1);
     -mybid(Pos).
 
 +assignext[source(A)]
@@ -87,26 +87,23 @@ threshold_ammo(20).
   -patroll_point(P);
   +patroll_point(0).
 
-+asscheck[source(A)]
-  <-
-  if(not soyjefe){
-  +asscheck;
-  }
-  .print("asscheck").
 
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
   .shoot(3,Position).
 
-  //////////////////////////
-+health(90): threshold_health(W) & H<W & not pedirvida
+//////////////////////////
+
++health(H): threshold_health(W) & H<W & not pedirvida
     <-
+        .print("mimemamemomimu");
         +pedirvida;
         .get_medics.
 
 +myMedics(M):pedirvida
     <-
+        .print("AYUDA ME ESTAN MATANDO");
         ?position(P);
         +mbids([]);
         +mehdics([]);
@@ -129,14 +126,17 @@ threshold_ammo(20).
     <-
         //aqui deberiamos hacer un py para elegir el mejor
         ?position(Mypos);
-        .selectbest(Mypos,M,Index);
-        .nth(Index,M,A);
-        .delete(Index,M,M1);
+        .selectbest(Mypos,B,I);
+        if(I >= 0){
+        .nth(I,M,A);
+        .delete(I,M,M1);
         .send(A,tell,acceptmedic);
         //borrar A de la lista
         .send(M1,tell,cancelmedic);
         -+mbids([]);
-        -+mehdics([]).
+        -+mehdics([]);
+        }
+        ?position(G).
 
 +!elegirmedic: not(mbids(Bi))
     <-

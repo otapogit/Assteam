@@ -16,21 +16,22 @@
   <-
   .nth(0,B,Jefe);
   .send(Jefe,tell,assignjefe);
-  .wait(10);
+  .wait(25);
   .nth(1,B,Res1);
   .send(Res1,tell,assignres);
-  .wait(10);
+  .wait(25);
   .nth(2,B,Res2);
   .send(Res2,tell,assignres);
+  .wait(25);
   .nth(3,B,Int1);
   .send(Int1,tell,assignint);
-  .wait(10);
+  .wait(25);
   .nth(4,B,Int2);
   .send(Int2,tell,assignint);
-  .wait(10);
+  .wait(25);
   .nth(5,B,Ext1);
   .send(Ext1,tell,assignext);
-  .wait(10);
+  .wait(25);
   .nth(6,B,Ext2);
   .send(Ext2,tell,assignext);
   .print("mi rol asignado").
