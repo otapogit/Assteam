@@ -1,5 +1,5 @@
 //TEAM_AXIS
-threshold_health(100).
+threshold_health(30).
 threshold_ammo(20).
 
 +flag (F): team(200)
@@ -26,7 +26,7 @@ threshold_ammo(20).
   <-
   ?flag(F);
     .register_service("externo");
-    .create_control_points(F,75,3,C);
+    .create_control_points(F,50,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
@@ -38,12 +38,13 @@ threshold_ammo(20).
   <-
     ?flag(F);
     .register_service("jefe");
-    .create_control_points(F,75,3,C);
+    .create_control_points(F,5,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
+    .get_service("jefe");
     .print("soy jefe").    
 
 +assignres[source(A)]
@@ -62,7 +63,7 @@ threshold_ammo(20).
   <-
     ?flag(F);
     .register_service("interno");
-    .create_control_points(F,40,3,C);
+    .create_control_points(F,25,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
@@ -89,16 +90,32 @@ threshold_ammo(20).
 
 
 
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): jefe(J)
+  <-
+  if(not todosaqui){
+    +todosaqui;
+    .get_backups;
+    .print("obamna");
+    .wait(200);
+    ?myBackups(B);
+    .send(B,tell,refuerzo(Position));
+    -myBackups(B);
+    -discardasalto;
+    .wait(2000);
+  -todosaqui
+  }
+  .shoot(3,Position).
+
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
   .shoot(3,Position).
 
+  
 //////////////////////////
 
 +health(H): threshold_health(W) & H<W & not pedirvida
     <-
         +pedirvida;
-        .print("mimemamemomimu");
         .get_medics.
 
 +myMedics(M):pedirvida
@@ -142,7 +159,14 @@ threshold_ammo(20).
     <-
         -pedirvida.
 
++refuerzo(Pos)[source(A)]
+  <-
+    .goto(Pos);
+    .print("defiendan a ",A);
+    +alataque.
+
 +healIn(Pos)[source(A)]
     <-
     +acurar;
     .goto(Pos).
+
