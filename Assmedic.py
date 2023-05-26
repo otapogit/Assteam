@@ -7,51 +7,47 @@ class AssMedic(BDIMedic):
 
         @actions.add_function(".ptomedio",(tuple,tuple))
         def _ptomedio(pos1,pos2):
-            posx = int(pos1[0] / 2 + pos2[0] / 2)
-            posz = int(pos1[2] / 2 + pos2[2] / 2)
-            print(posx,posz)
-            if self.map.can_walk(posx,posz):
-                return tuple([posx,0,posz])
-            else:
-                posx2 = posx
-                posz2 = posz
-                
-                for acc in range (1,100):
-                    posx2 = posx + acc
-                    if self.map.can_walk(posx2, posz2):
-                        break
-                    posx2 = posx - acc
-                    if self.map.can_walk(posx2, posz2):
-                        break
-                    posx2 = posx
-                    posz2 = posz + acc
-                    if self.map.can_walk(posx2, posz2):
-                        break
-                    posz2 = posz - acc
-                    if self.map.can_walk(posx2, posz2):
-                        break
-                    posz2 = posz
-                #print([posx2,0,posz2])
-                return tuple([posx2,0,posz2])
+            return tuple([int((pos1[0]+pos2[0])/2), 0, int((pos1[2]+pos2[2])/2)])
 
 
-        @actions.add_function(".canWalk",(list,))
+        @actions.add_function(".canWalk",(tuple))
         def _canWalk(x):
             if map.can_walk(x[0],x[2]):
-                return 1
-            else:
-                return 0
+                return x
+            i = 1
+            while(True)
+                if map.can_walk(x[0] + i,x[2]):
+                    x[0] = x[0] + i
+                    return x
+                if map.can_walk(x[0] - i,x[2]):
+                    x[0] = x[0] - i
+                    return x
+                if map.can_walk(x[0],x[2] + i):
+                    x[2] = x[2] + i
+                    return x
+                if map.can_walk(x[0],x[2] - i):
+                    x[2] = x[2] - i
+                    return x
+                i++
         
-        @actions.add_function(".mascercano",(list,list))
+        @actions.add_function(".mascercano",(list,tuple, ))
         def _mascercano(listpos, mypos):
             bestpos = listpos[0]
             index = 0
-            #listpos.del(0)
             for i, pos in enumerate(listpos):
                 if((abs(mypos[0] - pos[0]) + abs(mypos[2] - pos[2])) < (abs(mypos[0] - bestpos[0]) + abs(mypos[2] - bestpos[2]))):
                     bestpos = pos
-                    index = i + 1
+                    index = i
             return index 
+
+         @actions.add_function(".asignaroles",(list, list, tuple))
+         def _asignaroles(listagentes, listpos, F):
+            // sort by de más cercano a la F a más lejano 
+            distance = []
+            for pos in listpos:
+                distance.append((abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
+            result = [x for _,x in sorted(zip(distance,listagentes))]
+            return result
                 
 
 """
