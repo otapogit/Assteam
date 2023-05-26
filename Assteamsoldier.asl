@@ -102,7 +102,7 @@ threshold_ammo(20).
     -myBackups(B);
     -discardasalto;
     .wait(2000);
-  -todosaqui
+    -todosaqui;
   }
   .shoot(3,Position).
 
