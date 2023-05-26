@@ -14,27 +14,37 @@
 
 +myBackups(B):check
   <-
-  .nth(0,B,Jefe);
+  .send(B,tell,informaposicion);
+  .wait(2000);
+  .asignaroles(B, bids, F, newB);
+  .nth(0,newB,Jefe);
   .send(Jefe,tell,assignjefe);
   .wait(25);
-  .nth(1,B,Res1);
+  .nth(1,newB,Res1);
   .send(Res1,tell,assignres);
   .wait(25);
-  .nth(2,B,Res2);
+  .nth(2,newB,Res2);
   .send(Res2,tell,assignres);
   .wait(25);
-  .nth(3,B,Int1);
+  .nth(3,newB,Int1);
   .send(Int1,tell,assignint);
   .wait(25);
-  .nth(4,B,Int2);
+  .nth(4,newB,Int2);
   .send(Int2,tell,assignint);
   .wait(25);
-  .nth(5,B,Ext1);
+  .nth(5,newB,Ext1);
   .send(Ext1,tell,assignext);
   .wait(25);
-  .nth(6,B,Ext2);
+  .nth(6,newB,Ext2);
   .send(Ext2,tell,assignext);
   .print("mi rol asignado").
+
++backbid(Pos)[source(A)]
+    <-
+    ?bids(B);
+    .concat(B,[Pos],B1);
+    -+mbids(B1);
+    -backbid(Pos).
 
 +target_reached(T): patrolling & team(200) 
   <-

@@ -12,15 +12,8 @@ threshold_ammo(20).
 +informaposicion[source(A)]
     <-
     ?position(Pos);
-    .send(A,tell,mybid(Pos));
+    .send(A,tell,backbid(Pos));
     -informaposicion.
-
-+mybid(Pos)[source(A)]
-    <-
-    ?mbids(B);
-    .concat(B,[Pos],B1);
-    -+mbids(B1);
-    -mybid(Pos).
 
 +assignext[source(A)]
   <-
