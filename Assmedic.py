@@ -7,10 +7,11 @@ class AssMedic(BDIMedic):
 
         @actions.add_function(".ptomedio",(tuple,tuple))
         def _ptomedio(pos1,pos2):
-            posx = pos1[0]/2+pos2[0]/2
-            posz = pos1[2]/2+pos2[2]/2
+            posx = int(pos1[0] / 2 + pos2[0] / 2)
+            posz = int(pos1[2] / 2 + pos2[2] / 2)
+            print(posx,posz)
             if self.map.can_walk(posx,posz):
-                return [posx,0,posz]
+                return tuple([posx,0,posz])
             else:
                 posx2 = posx
                 posz2 = posz
@@ -30,8 +31,8 @@ class AssMedic(BDIMedic):
                     if self.map.can_walk(posx2, posz2):
                         break
                     posz2 = posz
-                print([posx2,0,posz2])
-                return [posx2,0,posz2]
+                #print([posx2,0,posz2])
+                return tuple([posx2,0,posz2])
 
 
         @actions.add_function(".canWalk",(list,))
@@ -98,4 +99,11 @@ Información disponible desde Python:
 ✤ threshold.ammo
 ✤ threshold.aim
 ✤ threshold.shot
+
+
+pygomas manager -j managerass@gtirouter.dsic.upv.es -m map_01 -sj serviceass@gtirouter.dsic.upv.es -np 20
+pygomas  run -g pygomas.json
+
+
+
 """

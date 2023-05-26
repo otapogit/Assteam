@@ -97,8 +97,8 @@ threshold_ammo(20).
 
 +health(H): threshold_health(W) & H<W & not pedirvida
     <-
-        .print("mimemamemomimu");
         +pedirvida;
+        .print("mimemamemomimu");
         .get_medics.
 
 +myMedics(M):pedirvida

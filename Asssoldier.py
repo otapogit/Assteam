@@ -15,7 +15,6 @@ class AssSoldier(BDISoldier):
                 return -1
             if len(mehdics) == 1:
                 return 0
-            print(mehdics)
             counter = 0
             best = 0
             bestx = None
@@ -35,6 +34,5 @@ class AssSoldier(BDISoldier):
                     bestz = newz
                     best = counter
                 counter += 1
-            print(best)
             return best
 
