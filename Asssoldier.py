@@ -5,8 +5,8 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".selectbest",(list,tuple))
-        def _selectbest(listpos, mypos):
+        @actions.add_function(".selectbest",(tuple,list))
+        def _selectbest(mypos, listpos):
             if len(listpos) == 0:
                 return -1
             bestpos = listpos[0]
@@ -17,5 +17,12 @@ class AssSoldier(BDISoldier):
                     index = i
             return index 
 
-        
+        @actions.add(".checkfov",0)
+        def _checkfov(agent, term, intention):
+            list = agent.fov_objects #comprobar si solo devuelve objetos o todo lo que este en el fov
+            #si devuelve todo, se puede comprobar número de enemigos o si hay un aliado en el fov 
+            #sino, tocara hacerlo con el asl 
+            #a partir de este método, decidir que hace el soldado:
+                # 1. si hay aliados y enemigos, informar aliados de situación (salir del fov! retirarse o atacar)
+                # 2. si solo hay enemigos, depende del número decide atacar en solitario, informar a su otro compañero, o contactar con el jefe para más refuerzos 
 
