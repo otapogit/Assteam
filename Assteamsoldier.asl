@@ -166,17 +166,21 @@ threshold_ammo(20).
 +reserva(L)
     <-
     ?position(Pos);
-    .send(L,tell,goto(Pos));
+    .send(L,tell,ir_a(Pos));
     -reserva(_).
 
 +interno(L)
     <-
     ?position(Pos);
-    .send(L,tell,goto(Pos));
+    .send(L,tell,ir_a(Pos));
     -interno(_).
 
 +externo(L)
     <-
     ?position(Pos);
-    .send(L,tell,goto(Pos));
+    .send(L,tell,ir_a(Pos));
     -externo(_).
+
++ir_a(Pos)[source(A)]
+    <-
+    .goto(Pos).
