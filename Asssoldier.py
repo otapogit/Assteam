@@ -5,34 +5,17 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".nuevaFunction", (int,))
-        def _nuevaFunction(x):
-            return x * x
-
-        @actions.add_function(".selectbest",(tuple,tuple))
-        def _selectbest(mypos,mehdics):
-            if len(mehdics) == 0:
+        @actions.add_function(".selectbest",(list,tuple))
+        def _selectbest(listpos, mypos):
+            if len(listpos) == 0:
                 return -1
-            if len(mehdics) == 1:
-                return 0
-            counter = 0
-            best = 0
-            bestx = None
-            bestz = None
-            posx = mypos[0]
-            posz = mypos[2]
-            for mehdic in mehdics:
-                
-                newx = mehdic[0]
-                newz = mehdic[2]
-                if bestx is None:
-                    bestx = newx
-                    bestz = newz
-                    best = counter
-                elif abs(bestx-posx)+abs(bestz-posz) > abs(newx-posx)+abs(newz-posz):
-                    bestx = newx
-                    bestz = newz
-                    best = counter
-                counter += 1
-            return best
+            bestpos = listpos[0]
+            index = 0
+            for i, pos in enumerate(listpos):
+                if((abs(mypos[0] - pos[0]) + abs(mypos[2] - pos[2])) < (abs(mypos[0] - bestpos[0]) + abs(mypos[2] - bestpos[2]))):
+                    bestpos = pos
+                    index = i
+            return index 
+
+        
 

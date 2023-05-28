@@ -163,3 +163,20 @@ threshold_ammo(20).
     +acurar;
     .goto(Pos).
 
++reserva(L)
+    <-
+    ?position(Pos);
+    .send(L,tell,goto(Pos));
+    -reserva(_).
+
++interno(L)
+    <-
+    ?position(Pos);
+    .send(L,tell,goto(Pos));
+    -interno(_).
+
++externo(L)
+    <-
+    ?position(Pos);
+    .send(L,tell,goto(Pos));
+    -externo(_).

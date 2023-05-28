@@ -29,25 +29,7 @@ class AssMedic(BDIMedic):
                     x[2] = x[2] - i
                     return x
                 i++
-        
-        @actions.add_function(".mascercano",(list,tuple, ))
-        def _mascercano(listpos, mypos):
-            bestpos = listpos[0]
-            index = 0
-            for i, pos in enumerate(listpos):
-                if((abs(mypos[0] - pos[0]) + abs(mypos[2] - pos[2])) < (abs(mypos[0] - bestpos[0]) + abs(mypos[2] - bestpos[2]))):
-                    bestpos = pos
-                    index = i
-            return index 
-
-         @actions.add_function(".asignaroles",(list, list, tuple))
-         def _asignaroles(listagentes, listpos, F):
-            // sort by de más cercano a la F a más lejano 
-            distance = []
-            for pos in listpos:
-                distance.append((abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
-            result = [x for _,x in sorted(zip(distance,listagentes))]
-            return result
+    
                 
 
 """
