@@ -5,7 +5,7 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".selectbest",(tuple,list))
+        @actions.add_function(".selectbest",(tuple,list, ))
         def _selectbest(mypos, listpos):
             if len(listpos) == 0:
                 return -1
@@ -27,6 +27,7 @@ class AssSoldier(BDISoldier):
                     counter++  #si enemigo 
                 elif(x.team == 200):
                     aliados.append[x] #si aliado
+                #ns que pasara si llamas a .team con un paquete 
 
                     
             #devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
