@@ -12,20 +12,20 @@ class AssMedic(BDIMedic):
 
         @actions.add_function(".canWalk",(tuple))
         def _canWalk(x):
-            if map.can_walk(x[0],x[2]):
+            if self.map.can_walk(x[0],x[2]):
                 return x
             i = 1
             while(True):
-                if map.can_walk(x[0] + i,x[2]):
+                if self.map.can_walk(x[0] + i,x[2]):
                     x[0] = x[0] + i
                     return x
-                if map.can_walk(x[0] - i,x[2]):
+                if self.map.can_walk(x[0] - i,x[2]):
                     x[0] = x[0] - i
                     return x
-                if map.can_walk(x[0],x[2] + i):
+                if self.map.can_walk(x[0],x[2] + i):
                     x[2] = x[2] + i
                     return x
-                if map.can_walk(x[0],x[2] - i):
+                if self.map.can_walk(x[0],x[2] - i):
                     x[2] = x[2] - i
                     return x
                 i += 1

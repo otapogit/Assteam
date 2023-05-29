@@ -19,9 +19,17 @@ class AssSoldier(BDISoldier):
 
         @actions.add(".checkfov",0)
         def _checkfov(agent, term, intention):
-            list = agent.fov_objects #comprobar si solo devuelve objetos o todo lo que este en el fov
-            #si devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
-            #sino, tocara hacerlo con el asl 
+            list = self.fov_objects 
+            aliados = []
+            counter = 0
+            for x in list:
+                if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
+                    counter++  #si enemigo 
+                elif(x.team == 200):
+                    aliados.append[x] #si aliado
+
+                    
+            #devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
             #a partir de este m�todo, decidir que hace el soldado:
                 # 1. si hay aliados y enemigos, informar aliados de situaci�n (salir del fov! retirarse o atacar)
                 # 2. si solo hay enemigos, depende del n�mero decide atacar en solitario, informar a su otro compa�ero, o contactar con el jefe para m�s refuerzos 
