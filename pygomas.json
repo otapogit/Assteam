@@ -1,8 +1,8 @@
 {
     "host": "gtirouter.dsic.upv.es",
-    "manager": "managerass",
+    "manager": "managerasso",
     "manager_password": "secret",
-    "service": "serviceass",
+    "service": "serviceasso",
     "service_password": "secret",
     "axis": [
 		{
@@ -26,7 +26,7 @@
             "asl": "Assteammedic.asl"
         },
          {
-            "rank": "BDIFieldOp",
+            "rank": "Assfieldop.AssFieldop",
             "name": "fieldop_axis",
             "password": "secret",
             "asl": "Assteamfieldop.asl"

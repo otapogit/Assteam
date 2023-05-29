@@ -15,7 +15,7 @@ class AssMedic(BDIMedic):
             if map.can_walk(x[0],x[2]):
                 return x
             i = 1
-            while(True)
+            while(True):
                 if map.can_walk(x[0] + i,x[2]):
                     x[0] = x[0] + i
                     return x
@@ -28,7 +28,7 @@ class AssMedic(BDIMedic):
                 if map.can_walk(x[0],x[2] - i):
                     x[2] = x[2] - i
                     return x
-                i++
+                i += 1
     
                 
 

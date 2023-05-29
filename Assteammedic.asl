@@ -78,7 +78,7 @@
         /////////
         ?position(Mypos);
         .ptomedio(Pos,Mypos,Aux);
-        .canWalk(Aux, Point)
+        .canWalk(Aux, Point);
         .goto(Point);
         .send(A,tell,healIn(L)).
 

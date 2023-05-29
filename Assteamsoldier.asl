@@ -50,7 +50,8 @@ threshold_ammo(20).
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
-    .print("soy res").    
+    .print("soy res");
+    .get_service("reserva").    
 
 +assignint[source(A)]
   <-
@@ -98,6 +99,8 @@ threshold_ammo(20).
     -todosaqui;
   }
   .shoot(3,Position).
+
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): jefe(J)
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
