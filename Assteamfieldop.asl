@@ -18,7 +18,8 @@
   .send(B,tell,informaposicion);
   .wait(2000);
   ?bids(Bids);
-  .asignaroles(B, Bids, F, NewB);
+  ?backups(Backups)
+  .asignaroles(Backups, Bids, F, NewB);
   .nth(0,NewB,Jefe);
   .send(Jefe,tell,assignjefe);
   .wait(25);
@@ -44,8 +45,11 @@
 +backbid(Pos)[source(A)]
     <-
     ?bids(B);
+    ?backups(Bu)
     .concat(B,[Pos],B1);
-    -+mbids(B1);
+    .concat(Bu,[A],Bu1);
+    -+bids(B1);
+    -+backups(Bu1);
     -backbid(Pos).
 
 +target_reached(T): patrolling & team(200) 
