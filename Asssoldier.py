@@ -5,7 +5,7 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".selectbest",(tuple,list, ))
+        @actions.add_function(".selectbest",(tuple,list,int))
         def _selectbest(mypos, listpos):
             if len(listpos) == 0:
                 return -1
@@ -23,10 +23,11 @@ class AssSoldier(BDISoldier):
             aliados = []
             counter = 0
             for x in list:
-                if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
-                    counter++  #si enemigo 
-                elif(x.team == 200):
-                    aliados.append[x] #si aliado
+                if(type(self) == type(x)):
+                    if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
+                        counter++  #si enemigo 
+                    elif(x.team == 200):
+                        aliados.append[x] #si aliado
                 #ns que pasara si llamas a .team con un paquete 
 
                     
