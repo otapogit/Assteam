@@ -5,7 +5,7 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".selectbest",(tuple,list,int))
+        @actions.add_function(".selectbest",(tuple,tuple,int))
         def _selectbest(mypos, listpos):
             if len(listpos) == 0:
                 return -1

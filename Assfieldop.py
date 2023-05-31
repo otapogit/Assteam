@@ -5,19 +5,20 @@ class AssFieldop(BDIFieldOp):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".asignaroles",(list, list, tuple, list))
+        @actions.add_function(".asignaroles",(tuple, tuple, tuple, tuple))
         def _asignaroles(listagentes, listpos, F):
             #sort by de m�s cercano a la F a m�s lejano 
             print(listagentes)
             distance = []
             for pos in listpos:
                 distance.append(abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
-            print(zip(distance,listagentes))
-            print(sorted(zip(distance,listagentes)))
+            aux = list(listagentes)
+            print(zip(distance,aux))
+            print(sorted(zip(distance,aux)))
             result = []
-            for x in sorted(zip(distance,listagentes)):
+            for x in sorted(zip(distance,aux)):
                 result.append(x[1])
-            return result
+            return tuple(result)
 
 
         def sorter(tuplelist:list):
