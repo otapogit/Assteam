@@ -1,6 +1,7 @@
 //TEAM_AXIS
 threshold_health(30).
 threshold_ammo(20).
+myinfo(0).
 
 +flag (F): team(200)
   <-
@@ -103,29 +104,34 @@ threshold_ammo(20).
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
   .checkfov(info)
-  .nth(0,info,counter);
-  .nth(1,info,aliados);
-  # uno para uno
-  if(counter == 1) {
-    ?health(myHealth)
-    if(Health >= myHealth) {
-        +ayudita
-    }
-  } else {
-    .length(aliados, aux)
-    if ((counter - 1) <= aux) {
-        +ayudita
+  ?myinfo(previnfo)
+  if (info != previnfo) {
+    -myinfo(_)
+    +myinfo(info)
+    .nth(0,info,counter);
+    .nth(1,info,aliados);
+    // uno para uno
+    if(counter == 1) {
+        ?health(myHealth)
+        if(Health >= myHealth) {
+            +ayudita
+        }
     } else {
-        # mucha ayudita
+        .length(aliados, aux)
+        if ((counter - 1) <= aux) {
+            +ayudita
+        } else {
+            // mucha ayudita
+        }
     }
-  }
-  # informar aliados
-  if(aliados != []) {
-    if(ayudita) {
-        .send(aliados,tell,refuerzo(Position));
-        -ayudita
-    } else {
-        .send(aliados,tell,#fuera del fov, ns como hacerlo)
+    // informar aliados
+    if(aliados != []) {
+        if(ayudita) {
+            .send(aliados,tell,refuerzo(Position));
+            -ayudita
+        } else {
+            .send(aliados,tell,//fuera del fov)
+        }
     }
   }
   .shoot(3,Position).
