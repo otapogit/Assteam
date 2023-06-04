@@ -28,8 +28,7 @@ class AssSoldier(BDISoldier):
                         counter++  #si enemigo 
                     elif(x.team == 200):
                         aliados.append[x] #si aliado
-            return tuple((counter, tuple(sorted(aliados))))
-            #el sorted en aliados puede dar problemas, probar !
+            return tuple((counter, tuple(aliados)))
                     
             #devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
             #a partir de este m�todo, decidir que hace el soldado:

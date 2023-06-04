@@ -11,14 +11,14 @@ myinfo(0).
 
 
 +informaposicion[source(A)]
-    <-
+  <-
     ?position(Pos);
     .send(A,tell,backbid(Pos));
     -informaposicion.
 
 +assignext[source(A)]
   <-
-  ?flag(F);
+    ?flag(F);
     .register_service("externo");
     .create_control_points(F,50,3,C);
     +control_points(C);
@@ -105,11 +105,15 @@ myinfo(0).
   <-
   .checkfov(info)
   ?myinfo(previnfo)
-  if (info != previnfo) {
+  .nth(0,info,counter);
+  .nth(1,info,aliados);
+  .length(aliados, numa)
+  .nth(0,previnfo,prevcounter);
+  .nth(1,previnfo,prevaliados);
+  .length(prevaliados, prevnuma)
+  if (counter != prevcounter || numa != prevnuma) {
     -myinfo(_)
     +myinfo(info)
-    .nth(0,info,counter);
-    .nth(1,info,aliados);
     // uno para uno
     if(counter == 1) {
         ?health(myHealth)
@@ -117,20 +121,19 @@ myinfo(0).
             +ayudita
         }
     } else {
-        .length(aliados, aux)
-        if ((counter - 1) <= aux) {
+        if ((counter - 1) <= numa) {
             +ayudita
         } else {
             // mucha ayudita
         }
     }
     // informar aliados
-    if(aliados != []) {
+    if(numa != 0) {
         if(ayudita) {
             .send(aliados,tell,refuerzo(Position));
             -ayudita
         } else {
-            .send(aliados,tell,//fuera del fov)
+            //.send(aliados,tell,fuera del fov)
         }
     }
   }
