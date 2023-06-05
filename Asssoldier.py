@@ -5,7 +5,7 @@ class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".selectbest",(tuple,tuple,int))
+        @actions.add_function(".selectbest",(tuple,tuple,))
         def _selectbest(mypos, listpos):
             if len(listpos) == 0:
                 return -1
@@ -17,7 +17,7 @@ class AssSoldier(BDISoldier):
                     index = i
             return index 
 
-        @actions.add_function(".checkfov",(tuple))
+        @actions.add_function(".checkfov",(tuple,))
         def _checkfov(agent, term, intention):
             list = self.fov_objects 
             aliados = []
@@ -25,11 +25,36 @@ class AssSoldier(BDISoldier):
             for x in list:
                 if(type(self) == type(x)): #comprobar que se trate de un agente 
                     if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
-                        counter++  #si enemigo 
+                        counter +=1  #si enemigo 
                     elif(x.team == 200):
                         aliados.append[x] #si aliado
             return tuple((counter, tuple(aliados)))
-                    
+        
+        @actions.add_function(".enemyseen",(tuple,int,))
+        def _enemyseen(seen, enemyid):
+            if enemyid in seen:
+                return 0
+            else:
+                return 1
+            
+        @actions.add_function(".votar",(int,tuple,int,))
+        def _votar(tipo,enemigos,propio):
+            counter = len(enemigos)
+            counter += propio-tipo      #penalizar opinion de votacion si el agente es de menor rango
+            if(counter < 0):
+                return 0
+            else:
+                return counter
+            
+        @actions.add_function(".resolvervotos",(tuple,))
+        def _resolvervotos(votos):
+            counter = 0
+            for v in votos:
+                counter += v
+            if counter > 4:
+                return 1
+            else:
+                return 0
             #devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
             #a partir de este m�todo, decidir que hace el soldado:
                 # 1. si hay aliados y enemigos, informar aliados de situaci�n (salir del fov! retirarse o atacar)

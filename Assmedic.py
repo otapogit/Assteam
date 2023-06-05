@@ -5,12 +5,12 @@ class AssMedic(BDIMedic):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".ptomedio",(tuple,tuple,tuple))
+        @actions.add_function(".ptomedio",(tuple,tuple,))
         def _ptomedio(pos1,pos2):
             return tuple([int((pos1[0]+pos2[0])/2), 0, int((pos1[2]+pos2[2])/2)])
 
 
-        @actions.add_function(".canWalk",(tuple, tuple))
+        @actions.add_function(".canWalk",(tuple, ))
         def _canWalk(x):
             if self.map.can_walk(x[0],x[2]):
                 return x

@@ -5,7 +5,7 @@ class AssFieldop(BDIFieldOp):
     def add_custom_actions(self,actions):
         super().add_custom_actions(actions)
 
-        @actions.add_function(".asignaroles",(tuple, tuple, tuple, tuple))
+        @actions.add_function(".asignaroles",(tuple, tuple, tuple,))
         def _asignaroles(listagentes, listpos, F):
             #sort by de m�s cercano a la F a m�s lejano 
             print(listagentes)

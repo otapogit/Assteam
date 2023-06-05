@@ -1,8 +1,8 @@
 {
     "host": "gtirouter.dsic.upv.es",
-    "manager": "managerasso",
+    "manager": "managerass",
     "manager_password": "secret",
-    "service": "serviceasso",
+    "service": "serviceass",
     "service_password": "secret",
     "axis": [
 		{

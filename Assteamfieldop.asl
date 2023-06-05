@@ -13,13 +13,14 @@
   .get_backups;
   .print("Got control points").
 
-+myBackups(B):check
++myBackups(NewB):check
   <-
-  .send(B,tell,informaposicion);
+  //ESTO ESTA COMENTADO PORQUE DA ERROR EN ASIGNAROLES VAR NOT ITERABLE, 
+  //CUANDO SE SOLUCIONE CAMBIAR DE LA CABEDCERA BewB por B
+  //.send(B,tell,informaposicion);
   .wait(2000);
-  ?bids(Bids);
-  ?backups(Backups)
-  .asignaroles(Backups, Bids, F, NewB);
+  //?bids(Bids);
+  //.asignaroles(B, Bids, F, NewB);
   .nth(0,NewB,Jefe);
   .send(Jefe,tell,assignjefe);
   .wait(25);
@@ -45,7 +46,7 @@
 +backbid(Pos)[source(A)]
     <-
     ?bids(B);
-    ?backups(Bu)
+    ?myBackups(Bu);
     .concat(B,[Pos],B1);
     .concat(Bu,[A],Bu1);
     -+bids(B1);

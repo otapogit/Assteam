@@ -1,7 +1,7 @@
 //TEAM_AXIS
 threshold_health(30).
 threshold_ammo(20).
-myinfo(0).
+enemies([]).
 
 +flag (F): team(200)
   <-
@@ -11,21 +11,22 @@ myinfo(0).
 
 
 +informaposicion[source(A)]
-  <-
+    <-
     ?position(Pos);
     .send(A,tell,backbid(Pos));
     -informaposicion.
 
 +assignext[source(A)]
   <-
-    ?flag(F);
+  ?flag(F);
     .register_service("externo");
-    .create_control_points(F,50,3,C);
+    .create_control_points(F,40,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
+    .get_service("externo");
     .print("soy ext").
 
 +assignjefe[source(A)]
@@ -45,13 +46,14 @@ myinfo(0).
   <-
     ?flag(F);
     .register_service("reserva");
-    .create_control_points(F,10,3,C);
+    .create_control_points(F,5,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
     .print("soy res");
+    .get_service("reserva");
     .get_service("reserva").    
 
 +assignint[source(A)]
@@ -64,6 +66,7 @@ myinfo(0).
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
+    .get_service("interno");
     .print("soy int").
 
 +target_reached(T): patrolling 
@@ -85,71 +88,161 @@ myinfo(0).
 
 
 
-+enemies_in_fov(ID,Type,Angle,Distance,Health,Position): jefe(J)
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): jefe(J) & not votacion
   <-
   if(not todosaqui){
     +todosaqui;
     .get_backups;
     .print("obamna");
-    .wait(200);
+    .wait(300);
     ?myBackups(B);
     .send(B,tell,refuerzo(Position));
     -myBackups(B);
-    -discardasalto;
     .wait(2000);
     -todosaqui;
   }
   .shoot(3,Position).
+/*
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): reserva(R)
+  <-
+*/  
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
-  .checkfov(info)
-  ?myinfo(previnfo)
-  .nth(0,info,counter);
-  .nth(1,info,aliados);
-  .length(aliados, numa)
-  .nth(0,previnfo,prevcounter);
-  .nth(1,previnfo,prevaliados);
-  .length(prevaliados, prevnuma)
-  if (counter != prevcounter || numa != prevnuma) {
-    -myinfo(_)
-    +myinfo(info)
-    // uno para uno
-    if(counter == 1) {
-        ?health(myHealth)
-        if(Health >= myHealth) {
-            +ayudita
-        }
-    } else {
-        if ((counter - 1) <= numa) {
-            +ayudita
-        } else {
-            // mucha ayudita
-        }
+  
+  ?enemies(Enemies);
+  .enemyseen(Enemies,ID,Res);
+  if(Res == 1){
+    .concat(Enemies,[ID],Enemiesn);
+    -+enemies(Enemiesn);
+    .print("My enemies", Enemiesn);
+    if(not votacion){
+      +votacion;
+      +posmalo(Position);
+      .print("esto tiene que saberlo el moha");
+      .get_service("jefe");
     }
-    // informar aliados
-    if(numa != 0) {
-        if(ayudita) {
-            .send(aliados,tell,refuerzo(Position));
-            -ayudita
-        } else {
-            //.send(aliados,tell,fuera del fov)
-        }
-    }
+
   }
   .shoot(3,Position).
 
-  
-//////////////////////////
+ //////////////////////// VOTO SOCIAL 
+//Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion difgerente
++jefe(F):votacion & interno(I)
+  <-
+  .print("Se pelea en las urnas");
+  .send(F,tell,votando(1));
+  .wait(20);
+  ?posmalo(P);
+  .send(F,tell,objectivo(P));
+  -jefe(F).
 
++jefe(F):votacion & reserva(I)
+  <-
+  .print("Se pelea en las urnas");
+  .send(F,tell,votando(2));
+  .wait(20);
+  ?posmalo(P);
+  .send(F,tell,objectivo(P));
+  -jefe(F).
+
++jefe(F):votacion & externo(I)
+  <-
+  .print("Se pelea en las urnas");
+  .send(F,tell,votando(0));
+  .wait(20);
+  ?posmalo(P);
+  .send(F,tell,objectivo(P));
+  -jefe(F).
+
++objectivo(Pos)[source(A)]
+  <-
+  +posmalo(Pos).
+
++votando(Tipo)[source(A)]: not votacion
+  <-
+  //el jefe apunta que ya esta votando para no repetir votacion
+    +votacion;
+    .get_backups;
+    -+votos([]);
+    .wait(50);
+    .print("repartiendo votos");
+    ?myBackups(B);
+    .send(B,tell,votarEnemies(Tipo));
+    -myBackups(B);    //basura
+    .wait(1000);
+    !!resolvervotos.
+
++votarEnemies(Tipo)[source(A)]: not jefe(F)
+  <-
+    -+votacion;
+    .get_service("jefe");
+    if(interno(I)){
+      ?enemies(En);
+      .votar(Tipo,En,1,Res);
+    }
+    if(externo(X)){
+      ?enemies(En);
+      .votar(Tipo,En,0,Res);
+    }
+    if(reserva(R)){
+      ?enemies(En);
+      .votar(Tipo,En,2,Res);
+    }
+    ?jefe(W);
+    .send(W,tell,voto(Res)).
+
++voto(Res)[source(A)]
+  <-
+    ?votos(V);
+    .concat(V,[Res],VV);
+    -+votos(VV).
+
++!resolvervotos
+  <-
+  ?votos(V);
+  .resolvervotos(V,Res);
+  .get_backups;
+  .wait(25);
+  ?myBackups(B);
+  if(Res == 1){
+    ?posmalo(P);
+    .send(B,tell,ataqui(P))
+  }else{
+    .send(B,tell,endVoto);
+  }
+  .print("Decidido").
+
++ataqui(P)[source(A)]
+  <-
+    .goto(P);
+    !endVoto.
+
+
++!endVoto
+  <-
+    .wait(7000);
+    -+enemies([]);
+    -votacion.
+
++endVoto[source(A)]
+  <-
+    .wait(7000);
+    -+enemies([]);
+    -votacion.
+
+
+//////////////////////////
+/* HAY QUE ARREGLAR ESTE CONTRACT NET QUE DA ERROR
+    CREO QUE ES PORQUE MATAN AL SOLDADO MIENTRAS MANDA EL MENSAJE
 +health(H): threshold_health(W) & H<W & not pedirvida
     <-
         +pedirvida;
         .get_medics.
+*/
 
 +myMedics(M):pedirvida
     <-
-        .print("AYUDA ME ESTAN MATANDO");
         ?position(P);
         +mbids([]);
         +mehdics([]);
@@ -160,6 +253,7 @@ myinfo(0).
 
 +mybidm(Pos)[source(A)]: pedirvida
     <-
+        .print("Medic en ",Pos);
         ?mbids(B);
         .concat(B,[Pos],B1);
         -+mbids(B1);
