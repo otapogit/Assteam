@@ -19,11 +19,11 @@ class AssSoldier(BDISoldier):
 
         @actions.add_function(".checkfov",(tuple,))
         def _checkfov(agent, term, intention):
-            list = self.fov_objects 
+            list = agent.fov_objects 
             aliados = []
             counter = 0
             for x in list:
-                if(type(self) == type(x)): #comprobar que se trate de un agente 
+                if(type(agent) == type(x)): #comprobar que se trate de un agente 
                     if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
                         counter +=1  #si enemigo 
                     elif(x.team == 200):

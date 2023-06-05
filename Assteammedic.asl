@@ -80,7 +80,7 @@
         .ptomedio(Pos,Mypos,Aux);
         .canWalk(Aux, Point);
         .goto(Point);
-        .send(A,tell,healIn(L)).
+        .send(A,tell,healIn(Point)).
 
 +cancelmedic[source(A)]:curando(A,Pos)
     <-
