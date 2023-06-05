@@ -17,10 +17,13 @@
   <-
   //ESTO ESTA COMENTADO PORQUE DA ERROR EN ASIGNAROLES VAR NOT ITERABLE, 
   //CUANDO SE SOLUCIONE CAMBIAR DE LA CABEDCERA BewB por B
+  //+bids([]);
+  //+backups([]);
   //.send(B,tell,informaposicion);
-  .wait(2000);
+  .wait(3000);
   //?bids(Bids);
-  //.asignaroles(B, Bids, F, NewB);
+  //?backups(aux);
+  //.asignaroles(aux, Bids, F, NewB);
   .nth(0,NewB,Jefe);
   .send(Jefe,tell,assignjefe);
   .wait(25);
@@ -46,7 +49,7 @@
 +backbid(Pos)[source(A)]
     <-
     ?bids(B);
-    ?myBackups(Bu);
+    ?backups(Bu);
     .concat(B,[Pos],B1);
     .concat(Bu,[A],Bu1);
     -+bids(B1);

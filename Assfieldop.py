@@ -13,10 +13,9 @@ class AssFieldop(BDIFieldOp):
             for pos in listpos:
                 distance.append(abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
             aux = list(listagentes)
-            print(zip(distance,aux))
-            print(sorted(zip(distance,aux)))
+            aux = sorted(zip(distance,aux)))
             result = []
-            for x in sorted(zip(distance,aux)):
+            for x in aux:
                 result.append(x[1])
             return tuple(result)
 
