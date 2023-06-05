@@ -72,6 +72,7 @@ myinfo(0).
   -+patroll_point(P+1);
   -target_reached(T).
 
+
 +patroll_point(P): total_control_points(T) & P<T
   <-
   ?control_points(C);
