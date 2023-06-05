@@ -128,7 +128,7 @@ enemies([]).
 
  //////////////////////// VOTO SOCIAL 
 //Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion difgerente
-+jefe(F):votacion & interno(I)
++jefe(F):votacion && interno(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(1));
@@ -137,7 +137,7 @@ enemies([]).
   .send(F,tell,objectivo(P));
   -jefe(F).
 
-+jefe(F):votacion & reserva(I)
++jefe(F):votacion && reserva(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(2));
@@ -146,7 +146,7 @@ enemies([]).
   .send(F,tell,objectivo(P));
   -jefe(F).
 
-+jefe(F):votacion & externo(I)
++jefe(F):votacion && externo(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(0));
@@ -165,7 +165,7 @@ enemies([]).
     +votacion;
     .get_backups;
     -+votos([]);
-    .wait(50);
+    .wait(1000);
     .print("repartiendo votos");
     ?myBackups(B);
     .send(B,tell,votarEnemies(Tipo));
