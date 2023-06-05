@@ -1,6 +1,7 @@
 //TEAM_AXIS
 threshold_health(30).
 threshold_ammo(20).
+myinfo([0, []]).
 enemies([]).
 
 +flag (F): team(200)
@@ -110,22 +111,53 @@ enemies([]).
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
-  
   ?enemies(Enemies);
   .enemyseen(Enemies,ID,Res);
   if(Res == 1){
     .concat(Enemies,[ID],Enemiesn);
     -+enemies(Enemiesn);
     .print("My enemies", Enemiesn);
-    if(not votacion){
-      +votacion;
-      +posmalo(Position);
-      .print("esto tiene que saberlo el moha");
-      .get_service("jefe");
+  .checkfov(info)
+  ?myinfo(previnfo)
+  .nth(0,info,counter);
+  .nth(1,info,aliados);
+  .length(aliados, numa)
+  .nth(0,previnfo,prevcounter);
+  .nth(1,previnfo,prevaliados);
+  .length(prevaliados, prevnuma)
+  if (counter != prevcounter || numa != prevnuma) {
+    -myinfo(_)
+    +myinfo(info)
+    // uno para uno
+    if(counter == 1) {
+        ?health(myHealth)
+        if(Health >= myHealth) {
+            +ayudita
+        }
+    } 
+    if(counter != 1) {
+        if ((counter - 1) <= numa) {
+            +ayudita
+        } 
+        if ((counter - 1) > numa && not votacion) {
+            +votacion;
+            +posmalo(Position);
+            .print("esto tiene que saberlo el moha");
+            .get_service("jefe");
+        }
     }
-
+    // informar aliados
+    if(numa != 0) {
+        if(ayudita) {
+            .send(aliados,tell,refuerzo(Position));
+            -ayudita
+        } else {
+            //.send(aliados,tell,fuera del fov)
+        }  
+    }
   }
   .shoot(3,Position).
+
 
  //////////////////////// VOTO SOCIAL 
 //Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion difgerente

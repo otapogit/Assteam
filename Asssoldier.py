@@ -55,8 +55,3 @@ class AssSoldier(BDISoldier):
                 return 1
             else:
                 return 0
-            #devuelve todo, se puede comprobar n�mero de enemigos o si hay un aliado en el fov 
-            #a partir de este m�todo, decidir que hace el soldado:
-                # 1. si hay aliados y enemigos, informar aliados de situaci�n (salir del fov! retirarse o atacar)
-                # 2. si solo hay enemigos, depende del n�mero decide atacar en solitario, informar a su otro compa�ero, o contactar con el jefe para m�s refuerzos 
-
