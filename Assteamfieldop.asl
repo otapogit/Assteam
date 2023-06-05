@@ -13,36 +13,43 @@
   .get_backups;
   .print("Got control points").
 
-+myBackups(NewB):check
++myBackups(B):check
   <-
   //ESTO ESTA COMENTADO PORQUE DA ERROR EN ASIGNAROLES VAR NOT ITERABLE, 
   //CUANDO SE SOLUCIONE CAMBIAR DE LA CABEDCERA BewB por B
-  //+bids([]);
-  //+backups([]);
-  //.send(B,tell,informaposicion);
+  +bids([]);
+  +backups([]);
+  .send(B,tell,informaposicion);
   .wait(3000);
-  //?bids(Bids);
-  //?backups(aux);
-  //.asignaroles(aux, Bids, F, NewB);
-  .nth(0,NewB,Jefe);
+  ?bids(Bids);
+  ?backups(newB);
+  .asignaroles(Bids, F, index);
+  .nth(0,index,index0);
+  .nth(index0,NewB,Jefe);
   .send(Jefe,tell,assignjefe);
   .wait(25);
-  .nth(1,NewB,Res1);
+  .nth(1,index,index1);
+  .nth(index1,NewB,Res1);
   .send(Res1,tell,assignres);
   .wait(25);
-  .nth(2,NewB,Res2);
+  .nth(2,index,index2);
+  .nth(index2,NewB,Res2);
   .send(Res2,tell,assignres);
   .wait(25);
-  .nth(3,NewB,Int1);
+  .nth(3,index,index3);
+  .nth(index3,NewB,Int1);
   .send(Int1,tell,assignint);
   .wait(25);
-  .nth(4,NewB,Int2);
+  .nth(4,index,index4);
+  .nth(index4,NewB,Int2);
   .send(Int2,tell,assignint);
   .wait(25);
-  .nth(5,NewB,Ext1);
+  .nth(5,index,index5);
+  .nth(index5,NewB,Ext1);
   .send(Ext1,tell,assignext);
   .wait(25);
-  .nth(6,NewB,Ext2);
+  .nth(6,index,index6);
+  .nth(index6,NewB,Ext2);
   .send(Ext2,tell,assignext);
   .print("mi rol asignado").
 
