@@ -9,20 +9,30 @@
   +total_control_points(L);
   +patrolling;
   +patroll_point(0);
-  +recharge(F);
+  +rechargein(F);
   +check;
   .get_backups;
+
   .print("Got control points").
+
++!reloading
+  <-
+    .print("AMMOPACK!");
+    .reload;
+    .wait(1000);
+    !reloading.
 
 +myBackups(B):check
   <-
   +bids([]);
   +backups([]);
   .send(B,tell,informaposicion);
+  .wait(20);
+  ?flag(F);
+  .send(B,tell,rechargein(F));
   .wait(3000);
   ?bids(Bids);
   ?backups(NewB);
-  ?flag(F);
   .asignaroles(Bids, F, Index);
   .nth(0,Index,Index0);
   .nth(Index0,NewB,Jefe);
@@ -65,8 +75,10 @@
 
 +target_reached(T): patrolling & team(200) 
   <-
-  .print("AMMOPACK!");
-  .reload;
+  if(not reloader){
+    +reloader;
+    !reloading;
+  }
   ?patroll_point(P);
   -+patroll_point(P+1);
   -target_reached(T).
@@ -83,19 +95,6 @@
   +patroll_point(0).
 
 
-//TEAM_ALLIED 
-
-+flag (F): team(100) 
-  <-
-  .goto(F).
-
-+flag_taken: team(100) 
-  <-
-  .print("In ASL, TEAM_ALLIED flag_taken");
-  ?base(B);
-  +returning;
-  .goto(B);
-  -exploring.
 
 +heading(H): exploring
   <-
@@ -107,18 +106,6 @@
 //  <-
 //  .print("returning").
 
-+target_reached(T): team(100)
-  <- 
-  .print("target_reached");
-  +exploring;
-  .turn(0.375).
-
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <- 
   .shoot(3,Position).
-
-+recharge(F)
-  <-
-   .wait(1500);
-   ?myBackups(B);
-   .send(B,tell,rechargein(F)).

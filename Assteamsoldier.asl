@@ -1,6 +1,6 @@
 //TEAM_AXIS
 threshold_health(35).
-threshold_ammo(10).
+threshold_ammo(90).
 myinfo([0, []]).
 enemies([]).
 
@@ -74,6 +74,9 @@ enemies([]).
 +target_reached(T): patrolling 
   <-
   ?patroll_point(P);
+  if(arecargar){
+    -arecargar;
+  }
   -+patroll_point(P+1);
   -target_reached(T).
 
@@ -145,7 +148,7 @@ enemies([]).
         }
     } //varios enemigos
     if(not(Counter == 1)) {
-        if (Counter <= Numa)) {
+        if (Counter <= Numa) {
             +ayudita;
         } 
         if (Counter > Numa & not votacion) {
@@ -343,15 +346,12 @@ enemies([]).
   <-
     .print("recharge in ",F).
 
-+ammo(M):threshold_ammo(X) & X>A
++ammo(A):threshold_ammo(X) & X>A & rechargein(P) & not arecargar
   <-
-  if(rechargein(P)){
-    .goto(P);
-  }
-  ?ammo(W).
-    
+  +arecargar;
+  .goto(P).
 
-+packs_in_fov(ID,Type,Angle,Distance,Health,Position)
++packs_in_fov(ID,Type,Angle,Distance,Health,Position): arecargar
   <-
     .goto(Position).
 
