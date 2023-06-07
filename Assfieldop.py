@@ -16,22 +16,3 @@ class AssFieldop(BDIFieldOp):
             result = [x for _,x in sorted(indexed)]
             return tuple(result)
 
-
-        #sorter que no se usa
-            def sorter(tuplelist:list):
-            listd = []
-            result = []
-            for tuple in tuplelist:
-                listd.append(tuple[0])
-            for i in range(0,len(listd)):
-                for j in range(i,len(listd)):
-                    if listd[j] < listd[i]:
-                        aux = listd[i]
-                        listd[i] = listd[j]
-                        listd[j] = aux
-            for element in listd:
-                for i in range(0,listd):
-                    tupla = tuplelist[i]
-                    if tupla[0] == element:
-                        result.append(tupla[1])
-            return list(result)

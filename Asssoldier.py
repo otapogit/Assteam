@@ -1,5 +1,6 @@
 import json
 from pygomas.bdisoldier import BDISoldier
+from pygomas.bditroop import BDITroop
 
 class AssSoldier(BDISoldier):
     def add_custom_actions(self,actions):
@@ -17,17 +18,19 @@ class AssSoldier(BDISoldier):
                     index = i
             return index    
 
-        @actions.add(".checkfov",(tuple))
-        def _checkfov(agent, term, intention):
-            list = agent.fov_objects 
+        @actions.add_function(".checkfov",(int,))
+        def _checkfov(num):
+            list = self.fov_objects     
             aliados = []
             counter = 0
             for x in list:
-                if(type(agent) == type(x)): #comprobar que se trate de un agente 
+                try:
                     if(x.team == 100): #comprobar equipo para diferenciar entre aliado/enemigo
                         counter +=1  #si enemigo 
                     elif(x.team == 200):
                         aliados.append[x] #si aliado
+                except:
+                        pass
             return tuple((counter, tuple(aliados)))
         
         @actions.add_function(".enemyseen",(tuple,int,))
@@ -40,18 +43,22 @@ class AssSoldier(BDISoldier):
         @actions.add_function(".votar",(int,tuple,int,))
         def _votar(tipo,enemigos,propio):
             counter = len(enemigos)
-            counter += tipo - propio      #penalizar opinion de votacion si el agente es de menor rango
+            if (propio - tipo) < 0:
+                counter += propio - tipo      #penalizar opinion de votacion si el agente es de menor rango
             if(counter < 0):
                 return 0
             else:
-                return counter
+                return int(counter)
             
         @actions.add_function(".resolvervotos",(tuple,))
         def _resolvervotos(votos):
             counter = 0
             for v in votos:
-                counter += v
-            if counter > 4:
+                try:
+                    counter += int(v)
+                except:
+                    pass
+            if counter > 3:
                 return 1
             else:
                 return 0

@@ -14,7 +14,6 @@ enemies([]).
 +informaposicion[source(A)]
     <-
     ?position(Pos);
-    .print("informando posicion");
     .send(A,tell,backbid(Pos));
     -informaposicion.
 
@@ -22,7 +21,7 @@ enemies([]).
   <-
   ?flag(F);
     .register_service("externo");
-    .create_control_points(F,40,3,C);
+    .create_control_points(F,40,5,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
@@ -35,12 +34,14 @@ enemies([]).
   <-
     ?flag(F);
     .register_service("jefe");
-    .create_control_points(F,5,3,C);
+    /*
+    .create_control_points(F,5,5,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
+    */
     .get_service("jefe");
     .print("soy jefe").    
 
@@ -48,21 +49,20 @@ enemies([]).
   <-
     ?flag(F);
     .register_service("reserva");
-    .create_control_points(F,5,3,C);
+    .create_control_points(F,15,5,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
     .print("soy res");
-    .get_service("reserva");
     .get_service("reserva").    
 
 +assignint[source(A)]
   <-
     ?flag(F);
     .register_service("interno");
-    .create_control_points(F,25,3,C);
+    .create_control_points(F,30,3,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
@@ -103,7 +103,7 @@ enemies([]).
     +todosaqui;
     .get_backups;
     .print("obamna");
-    .wait(300);
+    .wait(500);
     ?myBackups(B);
     .send(B,tell,refuerzo(Position));
     -myBackups(B);
@@ -123,45 +123,48 @@ enemies([]).
   if(Res == 1){
     .concat(Enemies,[ID],Enemiesn);
     -+enemies(Enemiesn);
-    .print("My enemies", Enemiesn);
   }
-  .checkfov(info);
-  ?myinfo(previnfo);
-  .nth(0,info,counter);
-  .nth(1,info,aliados);
-  .length(aliados, numa);
-  .nth(0,previnfo,prevcounter);
-  .nth(1,previnfo,prevaliados);
-  .length(prevaliados, prevnuma);
-  if (not (counter == prevcounter) | not (numa == prevnuma)) {
+  .checkfov(1,Info);
+  ?myinfo(Previnfo);
+  .nth(0,Info,Counter);
+  .nth(1,Info,Aliados);
+  .length(Aliados, Numa);
+  .nth(0,Previnfo,Prevcounter);
+  .nth(1,Previnfo,Prevaliados);
+  .length(Prevaliados, Prevnuma);
+  
+  if(not (Counter == Prevcounter) | not (Numa == Prevnuma)) {
     -myinfo(_);
-    +myinfo(info);
+    +myinfo(Info);
+    
     // uno para uno
-    if(counter == 1) {
-        ?health(myHealth);
-        if(Health >= myHealth) {
+    if(Counter == 1) {
+        ?health(MyHealth);
+        if(Health >= MyHealth) {
             +ayudita;
         }
-    } 
-    if(not(counter == 1)) {
-        if (not(counter > numa)) {
+    } //varios enemigos
+    if(not(Counter == 1)) {
+        if (not(Counter > Numa)) {
             +ayudita;
         } 
-        if (not(counter <= numa) & not votacion) {
+        
+    }
+    //Si tiene aliados
+    if(not(Numa == 0)) {
+        if(ayudita) { 
+            .send(Aliados,tell,refuerzo(Position));
+            -ayudita;
+        } else {
+            .send(Aliados,tell,fuerafov);
+        }  
+    }///si no tiene aliados
+    if (not(Counter <= Numa) & not votacion) {
             +votacion;
+            +initvoto;
             +posmalo(Position);
             .print("esto tiene que saberlo el moha");
             .get_service("jefe");
-        }
-    }
-    // informar aliados
-    if(not(numa == 0)) {
-        if(ayudita) {
-            .send(aliados,tell,refuerzo(Position));
-            -ayudita;
-        } else {
-            .send(aliados,tell,fuerafov);
-        }  
     }
   }
   .shoot(3,Position).
@@ -169,36 +172,29 @@ enemies([]).
 
  //////////////////////// VOTO SOCIAL 
 //Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion diferente
-+jefe(F):votacion & interno(I)
++jefe(F):votacion & initvoto
   <-
   .print("Se pelea en las urnas");
-  .send(F,tell,votando(1));
+  if(interno(I)){
+    .send(F,tell,votando(1));
+  }
+  if(reserva(R)){
+    .send(F,tell,votando(2));
+  }
+  if(externo(E)){
+    .send(F,tell,votando(0));
+  }
   .wait(20);
   ?posmalo(P);
+  -initvoto;
   .send(F,tell,objectivo(P));
   -jefe(F).
 
-+jefe(F):votacion & reserva(I)
-  <-
-  .print("Se pelea en las urnas");
-  .send(F,tell,votando(2));
-  .wait(20);
-  ?posmalo(P);
-  .send(F,tell,objectivo(P));
-  -jefe(F).
-
-+jefe(F):votacion & externo(I)
-  <-
-  .print("Se pelea en las urnas");
-  .send(F,tell,votando(0));
-  .wait(20);
-  ?posmalo(P);
-  .send(F,tell,objectivo(P));
-  -jefe(F).
 
 +objectivo(Pos)[source(A)]
   <-
-  +posmalo(Pos).
+  +posmalo(Pos);
+  -objectivo(_).
 
 +votando(Tipo)[source(A)]: not votacion
   <-
@@ -206,18 +202,18 @@ enemies([]).
     +votacion;
     .get_backups;
     -+votos([]);
-    .wait(1000);
+    .wait(3000);
     .print("repartiendo votos");
     ?myBackups(B);
     .send(B,tell,votarEnemies(Tipo));
-    -myBackups(B);    //basura
-    .wait(1000);
+    -myBackups(B);
+    -votando(_);    //basura
     !!resolvervotos.
 
 +votarEnemies(Tipo)[source(A)]: not jefe(F)
   <-
     -+votacion;
-    .get_service("jefe");
+    //.get_service("jefe");
     if(interno(I)){
       ?enemies(En);
       .votar(Tipo,En,1,Res);
@@ -230,57 +226,65 @@ enemies([]).
       ?enemies(En);
       .votar(Tipo,En,2,Res);
     }
-    ?jefe(W);
-    .send(W,tell,voto(Res)).
+    //?jefe(W);
+    .print("mi voto es mi voz");
+    -votarEnemies(_);
+    .send(A,tell,voto(Res)).
 
 +voto(Res)[source(A)]
   <-
     ?votos(V);
-    .concat(V,[Res],VV);
-    -+votos(VV).
+    .concat(V,Res,Ve);
+    .print("voto recibido");
+    -voto(_);
+    -+votos(Ve).
 
 +!resolvervotos
   <-
-  ?votos(V);
-  .resolvervotos(V,Res);
   .get_backups;
-  .wait(25);
+  .wait(2000);
+  .print("recontando");
+  ?votos(V);
+  .print(V);
+  .resolvervotos(V,Res);
+  ?posmalo(P);
   ?myBackups(B);
   if(Res == 1){
-    ?posmalo(P);
+    .print("atacar en ",P);
     .send(B,tell,ataqui(P))
   }else{
-    .send(B,tell,endVoto);
+    .send(B,achieve,endVoto);
   }
-  .print("Decidido").
+  -posmalo(_);
+  .print("Decidido");
+  .wait(1000);
+  -+votos([]);
+  -votacion.
 
 +ataqui(P)[source(A)]
   <-
     .goto(P);
-    !endVoto.
-
-
-+!endVoto
-  <-
-    .wait(7000);
     -+enemies([]);
-    -votacion.
-
-+endVoto[source(A)]
-  <-
     .wait(7000);
+    -votacion;
+    -ataqui(_).
+
+
++!endVoto[source(A)]
+  <-
     -+enemies([]);
+    .wait(1000);
     -votacion.
 
 
 //////////////////////////
-/* HAY QUE ARREGLAR ESTE CONTRACT NET QUE DA ERROR
-    CREO QUE ES PORQUE MATAN AL SOLDADO MIENTRAS MANDA EL MENSAJE
+// HAY QUE ARREGLAR ESTE CONTRACT NET QUE DA ERROR
+// CREO QUE ES PORQUE MATAN AL SOLDADO MIENTRAS MANDA EL MENSAJE
 +health(H): threshold_health(W) & H<W & not pedirvida
     <-
         +pedirvida;
         .get_medics.
-*/
+
 
 +myMedics(M):pedirvida
     <-
@@ -326,7 +330,6 @@ enemies([]).
 +refuerzo(Pos)[source(A)]
   <-
     .goto(Pos);
-    .print("defiendan a ",A);
     +alataque.
 
 +healIn(Pos)[source(A)]
@@ -334,23 +337,9 @@ enemies([]).
     +acurar;
     .goto(Pos).
 
-+reserva(L)
-    <-
-    ?position(Pos);
-    .send(L,tell,ir_a(Pos));
-    -reserva(_).
-
-+interno(L)
-    <-
-    ?position(Pos);
-    .send(L,tell,ir_a(Pos));
-    -interno(_).
-
-+externo(L)
-    <-
-    ?position(Pos);
-    .send(L,tell,ir_a(Pos));
-    -externo(_).
++rechargein(F)[source(A)]
+  <-
+    .print("recharge in ",F).
 
 +ir_a(Pos)[source(A)]
     <-

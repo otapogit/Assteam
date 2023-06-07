@@ -2,13 +2,14 @@
 
 +flag (F): team(200) 
   <-
-  .create_control_points(F,10,3,C);
+  .create_control_points(F,10,5,C);
   +control_points(C);
   .length(C,L);
   +bids([]);
   +total_control_points(L);
   +patrolling;
   +patroll_point(0);
+  +recharge(F);
   +check;
   .get_backups;
   .print("Got control points").
@@ -21,6 +22,7 @@
   .wait(3000);
   ?bids(Bids);
   ?backups(NewB);
+  ?flag(F);
   .asignaroles(Bids, F, Index);
   .nth(0,Index,Index0);
   .nth(Index0,NewB,Jefe);
@@ -114,3 +116,9 @@
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <- 
   .shoot(3,Position).
+
++recharge(F)
+  <-
+   .get_backups;
+   .wait(1500);
+   .send(B,tell,rechargein(F)).

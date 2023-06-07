@@ -37,13 +37,13 @@
             "rank": "BDISoldier",
             "name": "allied_yourlogin",
             "password": "secret",
-            "amount": 8,
             "asl": "bdisoldier.asl"
         },
         {
             "rank": "BDIMedic",
             "name": "medic_allied_yourlogin",
             "password": "secret",
+            "amount": 8,
             "asl": "bdimedic.asl"
         },
          {
