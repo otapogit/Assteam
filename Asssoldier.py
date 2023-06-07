@@ -15,9 +15,9 @@ class AssSoldier(BDISoldier):
                 if((abs(mypos[0] - pos[0]) + abs(mypos[2] - pos[2])) < (abs(mypos[0] - bestpos[0]) + abs(mypos[2] - bestpos[2]))):
                     bestpos = pos
                     index = i
-            return index 
+            return index    
 
-        @actions.add_function(".checkfov",(tuple,))
+        @actions.add(".checkfov",(tuple))
         def _checkfov(agent, term, intention):
             list = agent.fov_objects 
             aliados = []
@@ -40,7 +40,7 @@ class AssSoldier(BDISoldier):
         @actions.add_function(".votar",(int,tuple,int,))
         def _votar(tipo,enemigos,propio):
             counter = len(enemigos)
-            counter += propio-tipo      #penalizar opinion de votacion si el agente es de menor rango
+            counter += tipo - propio      #penalizar opinion de votacion si el agente es de menor rango
             if(counter < 0):
                 return 0
             else:

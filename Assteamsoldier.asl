@@ -14,6 +14,7 @@ enemies([]).
 +informaposicion[source(A)]
     <-
     ?position(Pos);
+    .print("informando posicion");
     .send(A,tell,backbid(Pos));
     -informaposicion.
 
@@ -128,25 +129,25 @@ enemies([]).
   ?myinfo(previnfo);
   .nth(0,info,counter);
   .nth(1,info,aliados);
-  .length(aliados, numa)
+  .length(aliados, numa);
   .nth(0,previnfo,prevcounter);
   .nth(1,previnfo,prevaliados);
   .length(prevaliados, prevnuma);
-  if (counter != prevcounter || numa != prevnuma) {
-    -myinfo(_)
-    +myinfo(info)
+  if (not (counter == prevcounter) | not (numa == prevnuma)) {
+    -myinfo(_);
+    +myinfo(info);
     // uno para uno
     if(counter == 1) {
-        ?health(myHealth)
+        ?health(myHealth);
         if(Health >= myHealth) {
             +ayudita;
         }
     } 
-    if(counter != 1) {
-        if ((counter - 1) <= numa) {
+    if(not(counter == 1)) {
+        if (not(counter > numa)) {
             +ayudita;
         } 
-        if ((counter - 1) > numa && not votacion) {
+        if (not(counter <= numa) & not votacion) {
             +votacion;
             +posmalo(Position);
             .print("esto tiene que saberlo el moha");
@@ -154,7 +155,7 @@ enemies([]).
         }
     }
     // informar aliados
-    if(numa != 0) {
+    if(not(numa == 0)) {
         if(ayudita) {
             .send(aliados,tell,refuerzo(Position));
             -ayudita;
@@ -167,8 +168,8 @@ enemies([]).
 
 
  //////////////////////// VOTO SOCIAL 
-//Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion difgerente
-+jefe(F):votacion && interno(I)
+//Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion diferente
++jefe(F):votacion & interno(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(1));
@@ -177,7 +178,7 @@ enemies([]).
   .send(F,tell,objectivo(P));
   -jefe(F).
 
-+jefe(F):votacion && reserva(I)
++jefe(F):votacion & reserva(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(2));
@@ -186,7 +187,7 @@ enemies([]).
   .send(F,tell,objectivo(P));
   -jefe(F).
 
-+jefe(F):votacion && externo(I)
++jefe(F):votacion & externo(I)
   <-
   .print("Se pelea en las urnas");
   .send(F,tell,votando(0));

@@ -89,5 +89,5 @@
 +target_reached(T): curando(_,_)
     <-
         .cure;
-        -curando(_,_)
+        -curando(_,_);
         -target_reached(T).
