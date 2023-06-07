@@ -123,14 +123,15 @@ enemies([]).
     .concat(Enemies,[ID],Enemiesn);
     -+enemies(Enemiesn);
     .print("My enemies", Enemiesn);
-  .checkfov(info)
-  ?myinfo(previnfo)
+  }
+  .checkfov(info);
+  ?myinfo(previnfo);
   .nth(0,info,counter);
   .nth(1,info,aliados);
   .length(aliados, numa)
   .nth(0,previnfo,prevcounter);
   .nth(1,previnfo,prevaliados);
-  .length(prevaliados, prevnuma)
+  .length(prevaliados, prevnuma);
   if (counter != prevcounter || numa != prevnuma) {
     -myinfo(_)
     +myinfo(info)
@@ -138,12 +139,12 @@ enemies([]).
     if(counter == 1) {
         ?health(myHealth)
         if(Health >= myHealth) {
-            +ayudita
+            +ayudita;
         }
     } 
     if(counter != 1) {
         if ((counter - 1) <= numa) {
-            +ayudita
+            +ayudita;
         } 
         if ((counter - 1) > numa && not votacion) {
             +votacion;
@@ -156,9 +157,9 @@ enemies([]).
     if(numa != 0) {
         if(ayudita) {
             .send(aliados,tell,refuerzo(Position));
-            -ayudita
+            -ayudita;
         } else {
-            .send(aliados,tell,fuerafov)
+            .send(aliados,tell,fuerafov);
         }  
     }
   }

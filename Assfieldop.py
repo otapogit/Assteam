@@ -12,7 +12,7 @@ class AssFieldop(BDIFieldOp):
             for pos in listpos:
                 distance.append(abs(F[0] - pos[0]) + abs(F[2] - pos[2]))
             indexed = [(i,j) for (j,i) in enumerate(distance)]
-            result = [x for _,x in sorted(indexed))]
+            result = [x for _,x in sorted(indexed)]
             return tuple(result)
 
 
