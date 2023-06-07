@@ -76,6 +76,12 @@ enemies([]).
   -+patroll_point(P+1);
   -target_reached(T).
 
++fuerafov: patrolling 
+  <-
+  ?patroll_point(P);
+  -+patroll_point(P-1);
+  -fuerafov.
+
 
 +patroll_point(P): total_control_points(T) & P<T
   <-
@@ -152,7 +158,7 @@ enemies([]).
             .send(aliados,tell,refuerzo(Position));
             -ayudita
         } else {
-            //.send(aliados,tell,fuera del fov)
+            .send(aliados,tell,fuerafov)
         }  
     }
   }
