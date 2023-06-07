@@ -1,6 +1,6 @@
 //TEAM_AXIS
-threshold_health(30).
-threshold_ammo(20).
+threshold_health(35).
+threshold_ammo(10).
 myinfo([0, []]).
 enemies([]).
 
@@ -340,6 +340,15 @@ enemies([]).
 +rechargein(F)[source(A)]
   <-
     .print("recharge in ",F).
+
++ammo(M):threshold_ammo(X) & X>A
+  <-
+    ?rechargein(P);
+    .goto(P).
+
++packs_in_fov(ID,Type,Angle,Distance,Health,Position)
+  <-
+    .goto(Position).
 
 +ir_a(Pos)[source(A)]
     <-
