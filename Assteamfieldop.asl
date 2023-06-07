@@ -2,7 +2,7 @@
 
 +flag (F): team(200) 
   <-
-  .create_control_points(F,10,5,C);
+  .create_control_points(F,5,2,C);
   +control_points(C);
   .length(C,L);
   +bids([]);
@@ -100,7 +100,7 @@
 +heading(H): exploring
   <-
   .reload;
-  .wait(2000);
+  .wait(1000);
   .turn(0.375).
 
 //+heading(H): returning
@@ -119,6 +119,6 @@
 
 +recharge(F)
   <-
-   .get_backups;
    .wait(1500);
+   ?myBackups(B);
    .send(B,tell,rechargein(F)).

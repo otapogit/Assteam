@@ -343,8 +343,11 @@ enemies([]).
 
 +ammo(M):threshold_ammo(X) & X>A
   <-
-    ?rechargein(P);
-    .goto(P).
+  if(rechargein(P)){
+    .goto(P);
+  }
+  ?ammo(W).
+    
 
 +packs_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
