@@ -145,10 +145,16 @@ enemies([]).
         }
     } //varios enemigos
     if(not(Counter == 1)) {
-        if (not(Counter > Numa)) {
+        if (Counter <= Numa)) {
             +ayudita;
         } 
-        
+        if (Counter > Numa & not votacion) {
+            +votacion;
+            +initvoto;
+            +posmalo(Position);
+            .print("esto tiene que saberlo el moha");
+            .get_service("jefe");
+    }
     }
     //Si tiene aliados
     if(not(Numa == 0)) {
@@ -159,12 +165,8 @@ enemies([]).
             .send(Aliados,tell,fuerafov);
         }  
     }///si no tiene aliados
-    if (not(Counter <= Numa) & not votacion) {
-            +votacion;
-            +initvoto;
-            +posmalo(Position);
-            .print("esto tiene que saberlo el moha");
-            .get_service("jefe");
+    if(ayudita){
+        -ayudita;
     }
   }
   .shoot(3,Position).
