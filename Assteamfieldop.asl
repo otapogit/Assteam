@@ -15,8 +15,6 @@
 
 +myBackups(B):check
   <-
-  //ESTO ESTA COMENTADO PORQUE DA ERROR EN ASIGNAROLES VAR NOT ITERABLE, 
-  //CUANDO SE SOLUCIONE CAMBIAR DE LA CABEDCERA BewB por B
   +bids([]);
   +backups([]);
   .send(B,tell,informaposicion);
