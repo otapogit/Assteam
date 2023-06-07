@@ -77,6 +77,9 @@ enemies([]).
   if(arecargar){
     -arecargar;
   }
+  if(aporvida){
+    -aporvida;
+  }
   -+patroll_point(P+1);
   -target_reached(T).
 
@@ -351,7 +354,12 @@ enemies([]).
   +arecargar;
   .goto(P).
 
-+packs_in_fov(ID,Type,Angle,Distance,Health,Position): arecargar
++packs_in_fov(ID,Type,Angle,Distance,Health,Position): Type == 1001 & not aporvida
+  <-
+    +aporvida;
+    .goto(Position).
+
++packs_in_fov(ID,Type,Angle,Distance,Health,Position): arecargar & Type == 1002
   <-
     .goto(Position).
 
