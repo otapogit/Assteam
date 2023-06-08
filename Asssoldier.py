@@ -32,7 +32,13 @@ class AssSoldier(BDISoldier):
                 except:
                         pass
             return tuple((counter, tuple(aliados)))
-        
+
+        @actions.add_function(".enemybase",())
+        def _enemybase():
+            x = int((self.map.allied_base.get_init_x() + self.map.allied_base.get_end_x()) / 2)
+            z = int((self.map.allied_base.get_init_z() + self.map.allied_base.get_end_z()) / 2)
+            return tuple([x, 0, z])
+
         @actions.add_function(".enemyseen",(tuple,int,))
         def _enemyseen(seen, enemyid):
             if enemyid in seen:

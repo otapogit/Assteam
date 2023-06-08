@@ -10,6 +10,10 @@
   +patroll_point(0);
   .print("Got control points").
 
++flag_taken: team(200)
+  <-
+  .enemybase(Pos);
+  .goto(Pos).
 
 +target_reached(T): patrolling & team(200) 
   <-

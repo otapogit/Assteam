@@ -10,6 +10,10 @@ enemies([]).
   .wait(50);
   +mbids([]).
 
++flag_taken: team(200)
+  <-
+  .enemybase(Pos);
+  .goto(Pos).
 
 +informaposicion[source(A)]
     <-

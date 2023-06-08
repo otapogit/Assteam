@@ -15,6 +15,11 @@
 
   .print("Got control points").
 
++flag_taken: team(200)
+  <-
+  .enemybase(Pos);
+  .goto(Pos).
+
 +!reloading
   <-
     .print("AMMOPACK!");

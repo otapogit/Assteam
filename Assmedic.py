@@ -9,6 +9,11 @@ class AssMedic(BDIMedic):
         def _ptomedio(pos1,pos2):
             return tuple([int((pos1[0]+pos2[0])/2), 0, int((pos1[2]+pos2[2])/2)])
 
+        @actions.add_function(".enemybase",())
+        def _enemybase():
+            x = int((self.map.allied_base.get_init_x() + self.map.allied_base.get_end_x()) / 2)
+            z = int((self.map.allied_base.get_init_z() + self.map.allied_base.get_end_z()) / 2)
+            return tuple([x, 0, z])
 
         @actions.add_function(".canWalk",(tuple, ))
         def _canWalk(x):
