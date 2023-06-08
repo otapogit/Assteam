@@ -11,9 +11,7 @@
   +patroll_point(0);
   +rechargein(F);
   +check;
-  .get_backups;
-
-  .print("Got control points").
+  .get_backups.
 
 +flag_taken: team(200)
   <-
@@ -22,7 +20,6 @@
 
 +!reloading
   <-
-    .print("AMMOPACK!");
     .reload;
     .wait(1000);
     !reloading.
@@ -66,7 +63,7 @@
   .nth(6,Index,Index6);
   .nth(Index6,NewB,Ext2);
   .send(Ext2,tell,assignext);
-  .print("mi rol asignado").
+  .print("roles asignados").
 
 +backbid(Pos)[source(A)]
     <-
@@ -106,10 +103,6 @@
   .reload;
   .wait(1000);
   .turn(0.375).
-
-//+heading(H): returning
-//  <-
-//  .print("returning").
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <- 

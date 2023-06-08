@@ -7,8 +7,7 @@
   .length(C,L);
   +total_control_points(L);
   +patrolling;
-  +patroll_point(0);
-  .print("Got control points").
+  +patroll_point(0).
 
 +flag_taken: team(200)
   <-
@@ -17,7 +16,6 @@
 
 +target_reached(T): patrolling & team(200) 
   <-
-  .print("MEDPACK!");
   .cure;
   ?patroll_point(P);
   -+patroll_point(P+1);
@@ -55,9 +53,6 @@
   .wait(2000);
   .turn(0.375).
 
-//+heading(H): returning
-//  <-
-//  .print("returning").
 
 +target_reached(T): team(100)
   <- 

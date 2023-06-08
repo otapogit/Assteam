@@ -13,6 +13,7 @@ enemies([]).
 +flag_taken: team(200)
   <-
   .enemybase(Pos);
+  +todoonada;
   .goto(Pos).
 
 +informaposicion[source(A)]
@@ -107,7 +108,7 @@ enemies([]).
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position): jefe(J) & not votacion
   <-
-  if(not todosaqui){
+  if(not todosaqui & not todoonada){
     +todosaqui;
     .get_backups;
     .print("obamna");
@@ -119,10 +120,7 @@ enemies([]).
     -todosaqui;
   }
   .shoot(3,Position).
-/*
-+enemies_in_fov(ID,Type,Angle,Distance,Health,Position): reserva(R)
-  <-
-*/  
+
 
 +enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
   <-
@@ -184,7 +182,6 @@ enemies([]).
 //Dependiendo de quien llama la votacion si es el ataque enemigo o no, se asigna una puntuacion diferente
 +jefe(F):votacion & initvoto
   <-
-  .print("Se pelea en las urnas");
   if(interno(I)){
     .send(F,tell,votando(1));
   }
@@ -213,7 +210,6 @@ enemies([]).
     .get_backups;
     -+votos([]);
     .wait(3000);
-    .print("repartiendo votos");
     ?myBackups(B);
     .send(B,tell,votarEnemies(Tipo));
     -myBackups(B);
@@ -223,7 +219,6 @@ enemies([]).
 +votarEnemies(Tipo)[source(A)]: not jefe(F)
   <-
     -+votacion;
-    //.get_service("jefe");
     if(interno(I)){
       ?enemies(En);
       .votar(Tipo,En,1,Res);
@@ -236,8 +231,6 @@ enemies([]).
       ?enemies(En);
       .votar(Tipo,En,2,Res);
     }
-    //?jefe(W);
-    .print("mi voto es mi voz");
     -votarEnemies(_);
     .send(A,tell,voto(Res)).
 
@@ -273,7 +266,9 @@ enemies([]).
 
 +ataqui(P)[source(A)]
   <-
-    .goto(P);
+    if(not (aporvida | arecargar | todoonada)){
+      .goto(P);
+    }
     -+enemies([]);
     .wait(7000);
     -votacion;
@@ -339,8 +334,11 @@ enemies([]).
 
 +refuerzo(Pos)[source(A)]
   <-
-    .goto(Pos);
-    +alataque.
+    if(not (aporvida | arecargar)){
+      .goto(Pos);
+      +alataque;
+    }
+    .
 
 +healIn(Pos)[source(A)]
     <-
@@ -356,7 +354,7 @@ enemies([]).
   +arecargar;
   .goto(P).
 
-+packs_in_fov(ID,Type,Angle,Distance,Health,Position): Type == 1001 & not aporvida
++packs_in_fov(ID,Type,Angle,Distance,Health,Position): Type == 1001 & not aporvida & health(H) & threshold_health(W) & H<W
   <-
     +aporvida;
     .goto(Position).
