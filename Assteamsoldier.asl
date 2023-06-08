@@ -130,7 +130,7 @@ enemies([]).
     .concat(Enemies,[ID],Enemiesn);
     -+enemies(Enemiesn);
   }
-  .checkfov(1,Info);
+  .checkfov(Info);
   ?myinfo(Previnfo);
   .nth(0,Info,Counter);
   .nth(1,Info,Aliados);

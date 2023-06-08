@@ -18,8 +18,8 @@ class AssSoldier(BDISoldier):
                     index = i
             return index    
 
-        @actions.add_function(".checkfov",(int,))
-        def _checkfov(num):
+        @actions.add_function(".checkfov",())
+        def _checkfov():
             list = self.fov_objects     
             aliados = []
             counter = 0
