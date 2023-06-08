@@ -4,34 +4,68 @@
     "manager_password": "secret",
     "service": "serviceass",
     "service_password": "secret",
-    "axis": [
-		{
-            "rank": "Asssoldier.AssSoldier",
-            "name": "MOHAMED",
-            "password": "secret",
-            "asl": "Assteamsoldier.asl"
-        },
-        {
-            "rank": "Asssoldier.AssSoldier",
-            "name": "axis",
-            "password": "secret",
-            "amount": 6,
-            "asl": "Assteamsoldier.asl"
-        },
-        {
-            "rank": "Assmedic.AssMedic",
-            "name": "medic_axis",
-            "password": "secret",
-            "amount": 2,
-            "asl": "Assteammedic.asl"
-        },
-         {
-            "rank": "Assfieldop.AssFieldop",
-            "name": "fieldop_axis",
-            "password": "secret",
-            "asl": "Assteamfieldop.asl"
-        }
-    ],
+  "axis": [
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "moha",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "pako",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "kajissa",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "marta",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "alejandro",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "gabriel",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Asssoldier.AssSoldier",
+      "name": "camacho",
+      "password": "secret",
+      "asl": "Assteamsoldier.asl"
+    },
+    {
+      "rank": "Assmedic.AssMedic",
+      "name": "mehdi",
+      "password": "secret",
+      "asl": "Assteammedic.asl"
+    },
+    {
+      "rank": "Assmedic.AssMedic",
+      "name": "jorge",
+      "password": "secret",
+      "asl": "Assteammedic.asl"
+    },
+    {
+      "rank": "Assfieldop.AssFieldop",
+      "name": "angel",
+      "password": "secret",
+      "asl": "Assteamfieldop.asl"
+    }
+  ],
      "allied": [
 		{
             "rank": "BDISoldier",
