@@ -34,14 +34,12 @@ enemies([]).
   <-
     ?flag(F);
     .register_service("jefe");
-    /*
     .create_control_points(F,5,5,C);
     +control_points(C);
     .length(C,L);
     +total_control_points(L);
     +patrolling;
     +patroll_point(0);
-    */
     .get_service("jefe");
     .print("soy jefe").    
 
